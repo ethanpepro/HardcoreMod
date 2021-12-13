@@ -20,11 +20,19 @@
   "entrypoints": {
     "main": [
       "com.ethanpepro.hardcoremod.HardcoreMod"
+    ],
+    "cardinal-components-entity": [
+      "com.ethanpepro.hardcoremod.HardcoreModComponents"
     ]
   },
   "mixins": [
     "hardcoremod.mixins.json"
   ],
+  "custom": {
+    "cardinal-components": [
+      "hardcoremod:temperature"
+    ]
+  },
 
   "depends": {
     "fabricloader": ">=0.11.3",
