@@ -3,8 +3,8 @@
   "id": "hardcoremod",
   "version": "${version}",
 
-  "name": "HardcoreMod",
-  "description": "???",
+  "name": "Hardcore Mod",
+  "description": "Making Minecraft a formidable challenge!",
   "authors": [
     "ethanpepro"
   ],
@@ -13,7 +13,6 @@
     "sources": "https://github.com/ethanpepro/HardcoreMod"
   },
 
-  "license": "???",
   "icon": "assets/hardcoremod/icon.png",
 
   "environment": "*",
@@ -23,6 +22,9 @@
     ],
     "cardinal-components-entity": [
       "com.ethanpepro.hardcoremod.HardcoreModComponents"
+    ],
+    "tweed4:config": [
+      "com.ethanpepro.hardcoremod.HardcoreModConfig"
     ]
   },
   "mixins": [
