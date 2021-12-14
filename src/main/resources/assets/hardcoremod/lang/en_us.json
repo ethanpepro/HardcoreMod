@@ -1,5 +1,15 @@
 {
   "tweed4_tailor_screen.screen.hardcoremod": "Hardcore Mod Options",
 
-  "tweed4_tailor_screen.screen.hardcoremod.main.enableTemperature": "Enable Temperature"
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOverlays": "Enable Temperature Overlays",
+
+  "tweed4_tailor_screen.screen.hardcoremod.temperature": "Temperature",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.enable": "Enable Temperature Module",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateRate": "Temperature Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMinimumRate": "Temperature Minimum Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMaximumRate": "Temperature Maximum Update Rate",
+
+  "tweed4_tailor_screen.screen.hardcoremod.spoilage": "Spoilage",
+  "tweed4_tailor_screen.screen.hardcoremod.spoilage.enable": "Enable Spoilage Module"
 }

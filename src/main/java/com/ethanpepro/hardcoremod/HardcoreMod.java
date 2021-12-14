@@ -11,11 +11,13 @@ import org.apache.logging.log4j.Logger;
 // TODO: Evaluate how components are implemented (structuring)
 // TODO: Ensure synchronization between client and server configs (where server config takes precedence)
 
+// TODO: Just get it working, then abstract out interface to implementation for third-party mods
+
 public class HardcoreMod implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("hardcoremod");
 
 	@Override
 	public void onInitialize() {
-
+		HardcoreModTemperatures.register();
 	}
 }
