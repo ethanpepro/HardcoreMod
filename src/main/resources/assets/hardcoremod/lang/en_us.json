@@ -1,30 +1,42 @@
 {
   "tweed4_tailor_screen.screen.hardcoremod": "Hardcore Mod Options",
 
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOverlays": "Enable Temperature Overlays",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableNotifier": "Enable Notifier System",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageLife": "Notifier System Lifetime",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageMaximum": "Maximum Messages In Notifier",
+  "tweed4_tailor_screen.screen.hardcoremod.notifier": "Notifier",
+  "tweed4_tailor_screen.screen.hardcoremod.notifier.enabled": "Enable Notifier",
+  "tweed4_tailor_screen.screen.hardcoremod.notifier.maximumAge": "Maximum Message Age",
+  "tweed4_tailor_screen.screen.hardcoremod.notifier.maximumMessages": "Maximum Message Count",
 
   "tweed4_tailor_screen.screen.hardcoremod.temperature": "Temperature",
-  "tweed4_tailor_screen.screen.hardcoremod.temperature.enable": "Enable Temperature Module",
-  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateRate": "Temperature Update Rate",
-  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMinimumRate": "Temperature Minimum Update Rate",
-  "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMaximumRate": "Temperature Maximum Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.enabled": "Enable Temperature System",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.targetThreshold": "Target Temperature Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.minimumTemperatureThreshold": "Temperature Minimum Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.maximumTemperatureThreshold": "Temperature Maximum Update Rate",
 
   "temperatures.freezing": "Freezing",
   "temperatures.freezing.flavor.1": "You feel dangerously cold.",
-  "temperatures.freezing.flavor.2": "You worry about catching hypothermia.",
+  "temperatures.freezing.flavor.2": "Your skin begins to freeze.",
   "temperatures.freezing.flavor.3": "The environment is freezing cold.",
+
+  "temperatures.cold": "Cold",
+  "temperatures.cold.flavor.1": "You worry about developing hypothermia.",
+  "temperatures.cold.flavor.2": "There is a slight nip in the air.",
+  "temperatures.cold.flavor.3": "Your fingers tingle with the temperature.",
 
   "temperatures.temperate": "Temperate",
   "temperatures.temperate.flavor.1": "The temperature is quite nice.",
   "temperatures.temperate.flavor.2": "Your body feels at peace with its surroundings.",
-  "temperatures.temperate.flavor.3": "The environment feels fine.",
+  "temperatures.temperate.flavor.3": "Your body's temperature feels fine.",
+
+  "temperatures.hot": "Hot",
+  "temperatures.hot.flavor.1": "You worry about developing hyperthermia.",
+  "temperatures.hot.flavor.2": "Sweat begins to drip from your brow.",
+  "temperatures.hot.flavor.3": "Is that a mirage?",
 
   "temperatures.burning": "Burning",
   "temperatures.burning.flavor.1": "You feel dangerously hot.",
-  "temperatures.burning.flavor.2": "You worry about catching hyperthermia.",
-  "temperatures.burning.flavor.3": "The environment is scorching hot."
+  "temperatures.burning.flavor.2": "Your skin boils with the intense heat.",
+  "temperatures.burning.flavor.3": "Your body feels scorching hot.",
+
+  "effect.hardcoremod.hypothermia": "Hypothermia",
+  "effect.hardcoremod.hyperthermia": "Hyperthermia"
 }

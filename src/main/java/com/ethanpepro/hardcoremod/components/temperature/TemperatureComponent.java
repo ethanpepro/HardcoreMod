@@ -1,12 +1,15 @@
 package com.ethanpepro.hardcoremod.components.temperature;
 
+import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.notifier.NotifierUtil;
 import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
+import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -18,36 +21,76 @@ import java.util.Objects;
 public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, ServerTickingComponent {
 	private final PlayerEntity player;
 
-	private int temperatureLevelCurrent;
-	private int temperatureLevelCurrentTimer;
+	private int temperatureTarget;
+	private int temperatureTargetTimer;
 
-	private int temperatureLevelTarget;
-	private int temperatureLevelTargetTimer;
+	private int temperature;
+	private int temperatureTimer;
 
 	public TemperatureComponent(PlayerEntity player) {
 		this.player = player;
 
-		this.temperatureLevelCurrent = 0;
-		this.temperatureLevelCurrentTimer = 0;
+		temperatureTarget = 0;
+		temperatureTargetTimer = 0;
 
-		this.temperatureLevelTarget = 0;
-		this.temperatureLevelTargetTimer = 0;
+		temperature = 0;
+		temperatureTimer = 0;
 	}
 
-	private int getCurrentTemperatureUpdateThreshold() {
-		int updateRange = HardcoreModConfig.getMaximumTargetTemperatureUpdateThreshold() - HardcoreModConfig.getMinimumTargetTemperatureUpdateThreshold();
+	private int getTemperatureUpdateThreshold() {
+		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
 
-		int temperatureRange = (this.temperatureLevelTarget > 0) ? TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature() : TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
+		int temperatureRange = 0;
 
-		int currentRange = Math.abs(this.temperatureLevelCurrent - this.temperatureLevelTarget);
+		if (temperatureTarget > 0) {
+			temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature();
+		} else {
+			temperatureRange = TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
+		}
 
-		return Math.max(HardcoreModConfig.getMinimumTargetTemperatureUpdateThreshold(), HardcoreModConfig.getMaximumTargetTemperatureUpdateThreshold() - (currentRange * updateRange) / temperatureRange);
+		int currentRange = Math.abs(temperature - temperatureTarget);
+
+		return Math.max(HardcoreModConfig.temperature.minimumTemperatureThreshold, HardcoreModConfig.temperature.maximumTemperatureThreshold - (currentRange * updateRange) / temperatureRange);
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
-		float target = TemperatureHelper.calculateTemperatureTarget(player, player.getEntityWorld(), player.getBlockPos());
+		float target = TemperatureHelper.calculateTargetTemperature(player, player.getEntityWorld(), player.getBlockPos());
 
-		return TemperatureHelper.clampTemperature(target);
+		return TemperatureHelper.clamp(target);
+	}
+
+	private void onUpdateTemperature() {
+		String[] conditions = TemperatureHelper.getConditionsForTemperature(temperature);
+
+		if (Objects.nonNull(conditions)) {
+			for (String condition : conditions) {
+				switch (condition) {
+					case "hypothermia":
+						player.addStatusEffect(new StatusEffectInstance(HardcoreModStatusEffects.HYPOTHERMIA, HardcoreModConfig.temperature.maximumTemperatureThreshold, 0));
+						break;
+					case "hyperthermia":
+						player.addStatusEffect(new StatusEffectInstance(HardcoreModStatusEffects.HYPERTHERMIA, HardcoreModConfig.temperature.maximumTemperatureThreshold, 0));
+						break;
+					case "default":
+						player.removeStatusEffect(HardcoreModStatusEffects.HYPOTHERMIA);
+						player.removeStatusEffect(HardcoreModStatusEffects.HYPERTHERMIA);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature
+		String message = TemperatureHelper.getFlavorTextForTemperature(player.world, temperatureTarget);
+
+		if (Objects.nonNull(message)) {
+			NotifierUtil.pushMessage(player, message);
+		}
+	}
+
+	public int getTemperature() {
+		return temperature;
 	}
 
 	@Override
@@ -58,14 +101,14 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 	@Override
 	public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
-		buf.writeVarInt(this.temperatureLevelCurrent);
-		buf.writeVarInt(this.temperatureLevelCurrentTimer);
+		buf.writeVarInt(temperature);
+		buf.writeVarInt(temperatureTimer);
 	}
 
 	@Override
 	public void applySyncPacket(PacketByteBuf buf) {
-		this.temperatureLevelCurrent = buf.readVarInt();
-		this.temperatureLevelCurrentTimer = buf.readVarInt();
+		temperature = buf.readVarInt();
+		temperatureTimer = buf.readVarInt();
 
 		// TODO: We always synchronize the same information, do we need this?
 		// TODO: We don't sync because this is the sync packet, right?
@@ -73,52 +116,54 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 	@Override
 	public void serverTick() {
-		if (!HardcoreModConfig.isTemperatureSystemEnabled()) {
+		if (!HardcoreModConfig.temperature.enabled) {
 			return;
 		}
 
-		// TODO: Filter out players who would not be affected by temperature
-
-		this.temperatureLevelTargetTimer++;
-
-		if (this.temperatureLevelTargetTimer >= HardcoreModConfig.getTargetTemperatureUpdateThreshold()) {
-			this.temperatureLevelTargetTimer = 0;
-
-			this.temperatureLevelTarget = this.calculateTargetTemperatureForPlayer(this.player);
+		if (player.isSpectator() || player.isCreative()) {
+			return;
 		}
 
-		this.temperatureLevelCurrentTimer++;
+		temperatureTargetTimer++;
+		temperatureTimer++;
 
-		if (this.temperatureLevelCurrentTimer >= this.getCurrentTemperatureUpdateThreshold()) {
-			this.temperatureLevelCurrentTimer = 0;
+		if (temperatureTargetTimer >= HardcoreModConfig.temperature.targetThreshold) {
+			temperatureTargetTimer = 0;
 
-			if (this.temperatureLevelCurrent != this.temperatureLevelTarget) {
-				this.temperatureLevelCurrent += Integer.signum(this.temperatureLevelTarget - this.temperatureLevelCurrent);
+			temperatureTarget = calculateTargetTemperatureForPlayer(player);
+
+			HardcoreMod.LOGGER.info("{} -> {} ({}/{} ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold());
+		}
+
+		if (temperatureTimer >= getTemperatureUpdateThreshold()) {
+			temperatureTimer = 0;
+
+			if (temperature != temperatureTarget) {
+				if (temperature < temperatureTarget) {
+					temperature++;
+				} else {
+					temperature--;
+				}
+
+				onUpdateTemperature();
 			}
-
-			// TODO: Apply status effects
-
-			String message = TemperatureHelper.getFlavorTextForTemperature(this.player.world, temperatureLevelCurrent);
-
-			Objects.requireNonNull(message);
-
-			NotifierUtil.pushMessage(player, message);
-
-			HardcoreModComponents.TEMPERATURE.sync(this.player);
 		}
+
+		// TODO: We're always syncing every game tick because of temperatureTimer, find a way around this.
+		HardcoreModComponents.TEMPERATURE.sync(player);
 	}
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		this.temperatureLevelCurrent = tag.getInt("temperatureLevelCurrent");
-		this.temperatureLevelCurrentTimer = tag.getInt("temperatureLevelCurrentTimer");
+		temperature = tag.getInt("temperature");
+		temperatureTimer = tag.getInt("temperatureTimer");
 
-		HardcoreModComponents.TEMPERATURE.sync(this.player);
+		HardcoreModComponents.TEMPERATURE.sync(player);
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
-		tag.putInt("temperatureLevelCurrent", this.temperatureLevelCurrent);
-		tag.putInt("temperatureLevelCurrentTimer", this.temperatureLevelCurrentTimer);
+		tag.putInt("temperature", temperature);
+		tag.putInt("temperatureTimer", temperatureTimer);
 	}
 }

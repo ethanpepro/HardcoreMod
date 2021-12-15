@@ -1,6 +1,7 @@
 package com.ethanpepro.hardcoremod.client.gui.hud;
 
 import com.ethanpepro.hardcoremod.api.notifier.Message;
+import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,8 +9,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
@@ -23,29 +22,29 @@ public class NotifierHud extends DrawableHelper implements HudRenderCallback {
 	private final List<Message> messages;
 
 	public NotifierHud() {
-		this.client = MinecraftClient.getInstance();
+		client = MinecraftClient.getInstance();
 
-		this.messages = Lists.newArrayList();
+		messages = Lists.newArrayList();
 	}
 
 	public void pushMessage(@NotNull String message) {
-		if (this.messages.size() >= 5) {
-			this.messages.remove(0);
+		if (messages.size() >= HardcoreModConfig.notifier.maximumMessages) {
+			messages.remove(0);
 		}
 
-		this.messages.add(new Message(Language.getInstance().get(message), this.client.inGameHud.getTicks()));
+		messages.add(new Message(Language.getInstance().get(message), client.inGameHud.getTicks()));
 	}
 
-	private void purgeMessages() {
-		if (this.messages.isEmpty()) {
+	private void processMessages() {
+		if (messages.isEmpty()) {
 			return;
 		}
 
-		this.messages.removeIf(message -> this.client.inGameHud.getTicks() - message.getTick() >= 200);
+		messages.removeIf(message -> client.inGameHud.getTicks() - message.getTick() >= HardcoreModConfig.notifier.maximumAge);
 	}
 
-	private float calculateOpacityPercentageForAge(float age) {
-		float opacity = age / 200.0f;
+	private float calculateAlphaPercentageForAge(float age) {
+		float opacity = age / HardcoreModConfig.notifier.maximumAge;
 
 		opacity = 1.0f - opacity;
 		opacity *= 10.0f;
@@ -57,27 +56,30 @@ public class NotifierHud extends DrawableHelper implements HudRenderCallback {
 
 	@Override
 	public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-		purgeMessages();
+		processMessages();
 
-		List<Message> messageList = this.messages;
+		if (!HardcoreModConfig.notifier.enabled) {
+			return;
+		}
 
-		for (int i = 0; i < messageList.size(); i++) {
-			Message message = messageList.get(i);
-			String string = message.getMessage();
+		for (int i = 0; i < messages.size(); i++) {
+			Message message = messages.get(i);
+			String messageString = message.getMessage();
 
-			int age = this.client.inGameHud.getTicks() - message.getTick();
-			if (age >= 200) {
+			int age = client.inGameHud.getTicks() - message.getTick();
+			if (age >= HardcoreModConfig.notifier.maximumAge) {
 				continue;
 			}
 
-			float percentage = calculateOpacityPercentageForAge(age);
-
-			int alpha = (int)(255.0f * percentage);
+			int alpha = (int)(255.0f * calculateAlphaPercentageForAge(age));
 			if (alpha <= 4) {
 				continue;
 			}
 
-			this.client.textRenderer.drawWithShadow(matrixStack, string, (this.client.getWindow().getScaledWidth() * 0.5f) - (this.client.textRenderer.getWidth(string) * 0.5f), 2.0f + this.client.textRenderer.fontHeight * i, 0xffef86 + (alpha << 24));
+			int width = (client.getWindow().getScaledWidth() / 2) - (client.textRenderer.getWidth(messageString) / 2);
+			int height = 2 + client.textRenderer.fontHeight * i;
+
+			client.textRenderer.drawWithShadow(matrixStack, messageString, width, height, 0xffe662 + (alpha << 24));
 		}
 	}
 }

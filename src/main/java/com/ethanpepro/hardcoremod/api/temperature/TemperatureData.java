@@ -7,9 +7,14 @@ public class TemperatureData {
 	private int min;
 	private int max;
 	private String[] conditions;
-	private String[] flavor;
+	private String[] flavorText;
 
-	public @NotNull String getName() {
+	public TemperatureData() {
+
+	}
+
+	@NotNull
+	public String getName() {
 		return this.name;
 	}
 
@@ -21,11 +26,13 @@ public class TemperatureData {
 		return this.max;
 	}
 
-	public @NotNull String[] getConditions() {
+	@NotNull
+	public String[] getConditions() {
 		return this.conditions;
 	}
 
-	public @NotNull String[] getFlavor() {
-		return this.flavor;
+	@NotNull
+	public String[] getFlavorText() {
+		return this.flavorText;
 	}
 }

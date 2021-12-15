@@ -14,11 +14,12 @@ public class Message {
 		this.tick = tick;
 	}
 
+	@NotNull
 	public String getMessage() {
-		return this.message;
+		return message;
 	}
 
 	public int getTick() {
-		return this.tick;
+		return tick;
 	}
 }

@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TemperatureHelper {
 	public static int getAbsoluteMinimumTemperature() {
@@ -36,35 +37,51 @@ public class TemperatureHelper {
 		return (getAbsoluteMaximumTemperature() + getAbsoluteMinimumTemperature()) / 2;
 	}
 
-	public static int clampTemperature(float temperature) {
-		return Math.round(MathHelper.clamp(temperature, getAbsoluteMinimumTemperature(), getAbsoluteMaximumTemperature()));
+	public static boolean isTemperatureInRange(int temperature, int min, int max) {
+		return (temperature >= min && temperature <= max);
 	}
 
-	public static float calculateTemperatureTarget(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos) {
-		float target = getEquilibriumTemperature();
-
-		for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
-			if (modifier instanceof StaticTemperatureModifier) {
-				target += ((StaticTemperatureModifier)modifier).getModifier(player, world, pos);
-			}
-
-			if (modifier instanceof DynamicTemperatureModifier) {
-				target = ((DynamicTemperatureModifier)modifier).getModifier(player, world, pos, target);
+	@Nullable
+	public static String[] getConditionsForTemperature(int temperature) {
+		for (TemperatureData data : TemperatureDataRegistry.getTemperatureData().values()) {
+			if (isTemperatureInRange(temperature, data.getMin(), data.getMax())) {
+				return data.getConditions();
 			}
 		}
 
-		return target;
+		return null;
 	}
 
+	@Nullable
 	public static String getFlavorTextForTemperature(@NotNull World world, int temperature) {
 		for (TemperatureData data : TemperatureDataRegistry.getTemperatureData().values()) {
-			if (temperature >= data.getMin() && temperature <= data.getMax()) {
-				String[] strings = data.getFlavor();
+			if (isTemperatureInRange(temperature, data.getMin(), data.getMax())) {
+				String[] strings = data.getFlavorText();
 
 				return strings[world.getRandom().nextInt(strings.length)];
 			}
 		}
 
 		return null;
+	}
+
+	public static int clamp(float temperature) {
+		return (int)MathHelper.clamp(temperature, getAbsoluteMinimumTemperature(), getAbsoluteMaximumTemperature());
+	}
+
+	public static float calculateTargetTemperature(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos) {
+		float temperature = getEquilibriumTemperature();
+
+		for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
+			if (modifier instanceof StaticTemperatureModifier) {
+				temperature += ((StaticTemperatureModifier)modifier).getModifier(player, world, pos);
+			}
+
+			if (modifier instanceof DynamicTemperatureModifier) {
+				temperature = ((DynamicTemperatureModifier)modifier).getModifier(player, world, pos, temperature);
+			}
+		}
+
+		return temperature;
 	}
 }

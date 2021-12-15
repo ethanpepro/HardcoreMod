@@ -8,6 +8,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 
+// Diegetic uses of the Notifier system
 public class NotifierUtil {
 	public static void pushMessage(@NotNull PlayerEntity player, @NotNull String message) {
 		PacketByteBuf buf = PacketByteBufs.create();

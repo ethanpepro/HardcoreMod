@@ -2,10 +2,9 @@ package com.ethanpepro.hardcoremod;
 
 import com.ethanpepro.hardcoremod.api.temperature.TemperatureData;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.BaseTemperatureModifier;
-import com.ethanpepro.hardcoremod.api.temperature.modifier.DynamicTemperatureModifier;
-import com.ethanpepro.hardcoremod.api.temperature.modifier.StaticTemperatureModifier;
 import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureDataRegistry;
 import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureRegistry;
+import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.temperature.HardcoreModTemperatures;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -21,6 +20,7 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
@@ -30,7 +30,7 @@ import java.util.Set;
 // TODO: Refactor build.gradle dependencies
 // TODO: Make our libraries required?
 
-// TODO: Ensure synchronization between client and server configs (where server config takes precedence)
+// TODO: Ensure Tweed actually synchronizes between the client and server configs (where server config takes precedence)
 
 public class HardcoreMod implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("hardcoremod");
@@ -45,6 +45,8 @@ public class HardcoreMod implements ModInitializer {
 
 			@Override
 			public void reload(ResourceManager manager) {
+				TemperatureDataRegistry.clear();
+
 				Identifier file = new Identifier("hardcoremod", "temperature/temperatures.json");
 
 				try (InputStream stream = manager.getResource(file).getInputStream()) {
@@ -62,9 +64,8 @@ public class HardcoreMod implements ModInitializer {
 
 						TemperatureData data = gson.fromJson(value, TemperatureData.class);
 
-						TemperatureDataRegistry.registerTemperatureData(key, data);
+						TemperatureDataRegistry.register(key, data);
 					}
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -72,5 +73,39 @@ public class HardcoreMod implements ModInitializer {
 		});
 
 		HardcoreModTemperatures.register();
+
+		// TODO: How would this work for other mods?
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+			@Override
+			public Identifier getFabricId() {
+				return new Identifier("hardcoremod", "temperature_resources");
+			}
+
+			@Override
+			public void reload(ResourceManager manager) {
+				for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
+					modifier.clearResources();
+				}
+
+				for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
+					String name = modifier.getIdentifier().getPath() + ".json";
+					Identifier file = new Identifier("hardcoremod", "temperature/modifier/" + name);
+
+					try {
+						InputStream stream = manager.getResource(file).getInputStream();
+						InputStreamReader streamReader = new InputStreamReader(stream);
+						JsonReader jsonReader = new JsonReader(streamReader);
+
+						JsonObject root = JsonParser.parseReader(jsonReader).getAsJsonObject();
+
+						modifier.processResources(root);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		HardcoreModStatusEffects.register();
 	}
 }

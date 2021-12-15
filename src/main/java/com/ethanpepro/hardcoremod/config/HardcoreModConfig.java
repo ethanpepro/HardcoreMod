@@ -11,49 +11,31 @@ import de.siphalor.tweed4.tailor.cloth.ClothData;
 @ATweedConfig(scope = ConfigScope.SMALLEST, environment = ConfigEnvironment.SYNCED, tailors = {"tweed4:cloth"})
 @ClothData(modid = "hardcoremod")
 public class HardcoreModConfig {
-	public static class Accessibility {
-		public boolean enableOverlays = true;
-
-		public boolean enableNotifier = true;
+	public static class Notifier {
+		public boolean enabled = true;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int messageLife = 200;
+		public int maximumAge = 200;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "1.."))
-		public int messageMaximum = 5;
+		public int maximumMessages = 5;
 	}
 
 	@AConfigEntry(environment = ConfigEnvironment.CLIENT)
-	public static Accessibility accessibility;
+	public static Notifier notifier;
 
 	public static class Temperature {
-		public boolean enable = true;
+		public boolean enabled = true;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int updateThreshold = 60;
+		public int targetThreshold = 60;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int minimumThreshold = 20;
+		public int minimumTemperatureThreshold = 20;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int maximumThreshold = 1200;
+		public int maximumTemperatureThreshold = 1200;
 	}
 
 	public static Temperature temperature;
-
-	public static boolean isTemperatureSystemEnabled() {
-		return temperature.enable;
-	}
-
-	public static int getTargetTemperatureUpdateThreshold() {
-		return temperature.updateThreshold;
-	}
-
-	public static int getMinimumTargetTemperatureUpdateThreshold() {
-		return temperature.minimumThreshold;
-	}
-
-	public static int getMaximumTargetTemperatureUpdateThreshold() {
-		return temperature.maximumThreshold;
-	}
 }

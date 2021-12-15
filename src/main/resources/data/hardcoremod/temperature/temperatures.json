@@ -6,23 +6,49 @@
     "conditions": [
       "hypothermia"
     ],
-    "flavor": [
+    "flavorText": [
       "temperatures.freezing.flavor.1",
       "temperatures.freezing.flavor.2",
       "temperatures.freezing.flavor.3"
     ]
   },
+  "cold": {
+    "name": "temperatures.cold",
+    "min": "-3",
+    "max": "-2",
+    "conditions": [
+      "default"
+    ],
+    "flavorText": [
+      "temperatures.cold.flavor.1",
+      "temperatures.cold.flavor.2",
+      "temperatures.cold.flavor.3"
+    ]
+  },
   "temperate": {
     "name": "temperatures.temperate",
-    "min": "-3",
-    "max": "3",
+    "min": "-1",
+    "max": "1",
     "conditions": [
-
+      "default"
     ],
-    "flavor": [
+    "flavorText": [
       "temperatures.temperate.flavor.1",
       "temperatures.temperate.flavor.2",
       "temperatures.temperate.flavor.3"
+    ]
+  },
+  "hot": {
+    "name": "temperatures.hot",
+    "min": "2",
+    "max": "3",
+    "conditions": [
+      "default"
+    ],
+    "flavorText": [
+      "temperatures.hot.flavor.1",
+      "temperatures.hot.flavor.2",
+      "temperatures.hot.flavor.3"
     ]
   },
   "burning": {
@@ -32,7 +58,7 @@
     "conditions": [
       "hyperthermia"
     ],
-    "flavor": [
+    "flavorText": [
       "temperatures.burning.flavor.1",
       "temperatures.burning.flavor.2",
       "temperatures.burning.flavor.3"
