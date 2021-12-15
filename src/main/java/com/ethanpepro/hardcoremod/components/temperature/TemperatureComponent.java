@@ -1,7 +1,9 @@
-package com.ethanpepro.hardcoremod.temperature;
+package com.ethanpepro.hardcoremod.components.temperature;
 
-import com.ethanpepro.hardcoremod.HardcoreModComponents;
-import com.ethanpepro.hardcoremod.HardcoreModConfig;
+import com.ethanpepro.hardcoremod.api.notifier.NotifierUtil;
+import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
+import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -10,6 +12,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, ServerTickingComponent {
 	private final PlayerEntity player;
@@ -33,7 +37,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	private int getCurrentTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.getMaximumTargetTemperatureUpdateThreshold() - HardcoreModConfig.getMinimumTargetTemperatureUpdateThreshold();
 
-		int temperatureRange = (this.temperatureLevelTarget > 0) ? TemperatureRange.BURNING.getHigh() - TemperatureHelper.EQUILIBRIUM : TemperatureHelper.EQUILIBRIUM - TemperatureRange.FREEZING.getLow();
+		int temperatureRange = (this.temperatureLevelTarget > 0) ? TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature() : TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
 
 		int currentRange = Math.abs(this.temperatureLevelCurrent - this.temperatureLevelTarget);
 
@@ -41,7 +45,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
-		float target = TemperatureHelper.getTemperatureTarget(player, player.getEntityWorld(), player.getBlockPos());
+		float target = TemperatureHelper.calculateTemperatureTarget(player, player.getEntityWorld(), player.getBlockPos());
 
 		return TemperatureHelper.clampTemperature(target);
 	}
@@ -69,7 +73,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 	@Override
 	public void serverTick() {
-		if (!HardcoreModConfig.isTemperatureModuleEnabled()) {
+		if (!HardcoreModConfig.isTemperatureSystemEnabled()) {
 			return;
 		}
 
@@ -93,6 +97,12 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 			}
 
 			// TODO: Apply status effects
+
+			String message = TemperatureHelper.getFlavorTextForTemperature(this.player.world, temperatureLevelCurrent);
+
+			Objects.requireNonNull(message);
+
+			NotifierUtil.pushMessage(player, message);
 
 			HardcoreModComponents.TEMPERATURE.sync(this.player);
 		}

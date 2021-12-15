@@ -20,11 +20,17 @@
     "main": [
       "com.ethanpepro.hardcoremod.HardcoreMod"
     ],
+    "client": [
+      "com.ethanpepro.hardcoremod.client.HardcoreModClient"
+    ],
+    "server": [
+      "com.ethanpepro.hardcoremod.server.HardcoreModDedicatedServer"
+    ],
     "cardinal-components-entity": [
-      "com.ethanpepro.hardcoremod.HardcoreModComponents"
+      "com.ethanpepro.hardcoremod.components.HardcoreModComponents"
     ],
     "tweed4:config": [
-      "com.ethanpepro.hardcoremod.HardcoreModConfig"
+      "com.ethanpepro.hardcoremod.config.HardcoreModConfig"
     ]
   },
   "mixins": [

@@ -3,6 +3,9 @@
 
   "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
   "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOverlays": "Enable Temperature Overlays",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableNotifier": "Enable Notifier System",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageLife": "Notifier System Lifetime",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageMaximum": "Maximum Messages In Notifier",
 
   "tweed4_tailor_screen.screen.hardcoremod.temperature": "Temperature",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.enable": "Enable Temperature Module",
@@ -10,6 +13,18 @@
   "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMinimumRate": "Temperature Minimum Update Rate",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.updateMaximumRate": "Temperature Maximum Update Rate",
 
-  "tweed4_tailor_screen.screen.hardcoremod.spoilage": "Spoilage",
-  "tweed4_tailor_screen.screen.hardcoremod.spoilage.enable": "Enable Spoilage Module"
+  "temperatures.freezing": "Freezing",
+  "temperatures.freezing.flavor.1": "You feel dangerously cold.",
+  "temperatures.freezing.flavor.2": "You worry about catching hypothermia.",
+  "temperatures.freezing.flavor.3": "The environment is freezing cold.",
+
+  "temperatures.temperate": "Temperate",
+  "temperatures.temperate.flavor.1": "The temperature is quite nice.",
+  "temperatures.temperate.flavor.2": "Your body feels at peace with its surroundings.",
+  "temperatures.temperate.flavor.3": "The environment feels fine.",
+
+  "temperatures.burning": "Burning",
+  "temperatures.burning.flavor.1": "You feel dangerously hot.",
+  "temperatures.burning.flavor.2": "You worry about catching hyperthermia.",
+  "temperatures.burning.flavor.3": "The environment is scorching hot."
 }

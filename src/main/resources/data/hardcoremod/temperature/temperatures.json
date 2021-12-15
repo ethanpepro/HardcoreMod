@@ -1,0 +1,41 @@
+{
+  "freezing": {
+    "name": "temperatures.freezing",
+    "min": "-5",
+    "max": "-4",
+    "conditions": [
+      "hypothermia"
+    ],
+    "flavor": [
+      "temperatures.freezing.flavor.1",
+      "temperatures.freezing.flavor.2",
+      "temperatures.freezing.flavor.3"
+    ]
+  },
+  "temperate": {
+    "name": "temperatures.temperate",
+    "min": "-3",
+    "max": "3",
+    "conditions": [
+
+    ],
+    "flavor": [
+      "temperatures.temperate.flavor.1",
+      "temperatures.temperate.flavor.2",
+      "temperatures.temperate.flavor.3"
+    ]
+  },
+  "burning": {
+    "name": "temperatures.burning",
+    "min": "4",
+    "max": "5",
+    "conditions": [
+      "hyperthermia"
+    ],
+    "flavor": [
+      "temperatures.burning.flavor.1",
+      "temperatures.burning.flavor.2",
+      "temperatures.burning.flavor.3"
+    ]
+  }
+}

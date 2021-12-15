@@ -1,4 +1,4 @@
-package com.ethanpepro.hardcoremod;
+package com.ethanpepro.hardcoremod.config;
 
 import de.siphalor.tweed4.annotated.AConfigConstraint;
 import de.siphalor.tweed4.annotated.AConfigEntry;
@@ -8,11 +8,19 @@ import de.siphalor.tweed4.config.ConfigScope;
 import de.siphalor.tweed4.config.constraints.RangeConstraint;
 import de.siphalor.tweed4.tailor.cloth.ClothData;
 
-@ATweedConfig(scope = ConfigScope.SMALLEST, environment = ConfigEnvironment.SYNCED, tailors = {"tweed4:cloth", "tweed4:screen"})
+@ATweedConfig(scope = ConfigScope.SMALLEST, environment = ConfigEnvironment.SYNCED, tailors = {"tweed4:cloth"})
 @ClothData(modid = "hardcoremod")
 public class HardcoreModConfig {
 	public static class Accessibility {
 		public boolean enableOverlays = true;
+
+		public boolean enableNotifier = true;
+
+		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
+		public int messageLife = 200;
+
+		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "1.."))
+		public int messageMaximum = 5;
 	}
 
 	@AConfigEntry(environment = ConfigEnvironment.CLIENT)
@@ -22,30 +30,30 @@ public class HardcoreModConfig {
 		public boolean enable = true;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int updateRate = 20;
+		public int updateThreshold = 60;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int updateMinimumRate = 20;
+		public int minimumThreshold = 20;
 
 		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
-		public int updateMaximumRate = 800;
+		public int maximumThreshold = 1200;
 	}
 
 	public static Temperature temperature;
 
-	public static boolean isTemperatureModuleEnabled() {
+	public static boolean isTemperatureSystemEnabled() {
 		return temperature.enable;
 	}
 
 	public static int getTargetTemperatureUpdateThreshold() {
-		return temperature.updateRate;
+		return temperature.updateThreshold;
 	}
 
 	public static int getMinimumTargetTemperatureUpdateThreshold() {
-		return temperature.updateMinimumRate;
+		return temperature.minimumThreshold;
 	}
 
 	public static int getMaximumTargetTemperatureUpdateThreshold() {
-		return temperature.updateMaximumRate;
+		return temperature.maximumThreshold;
 	}
 }

@@ -1,6 +1,6 @@
-package com.ethanpepro.hardcoremod;
+package com.ethanpepro.hardcoremod.components;
 
-import com.ethanpepro.hardcoremod.temperature.TemperatureComponent;
+import com.ethanpepro.hardcoremod.components.temperature.TemperatureComponent;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
