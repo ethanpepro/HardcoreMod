@@ -6,5 +6,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public interface StaticTemperatureModifier extends BaseTemperatureModifier {
+	// TODO: Add back the distinction between player and world modifiers.
 	float getModifier(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos);
 }

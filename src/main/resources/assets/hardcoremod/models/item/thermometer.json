@@ -1,0 +1,62 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hardcoremod:item/thermometer_4_5"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.0
+      },
+      "model": "hardcoremod:item/thermometer_0"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.1
+      },
+      "model": "hardcoremod:item/thermometer_1"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.2
+      },
+      "model": "hardcoremod:item/thermometer_2"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.3
+      },
+      "model": "hardcoremod:item/thermometer_3"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.4
+      },
+      "model": "hardcoremod:item/thermometer"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.6
+      },
+      "model": "hardcoremod:item/thermometer_6"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.7
+      },
+      "model": "hardcoremod:item/thermometer_7"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.8
+      },
+      "model": "hardcoremod:item/thermometer_8"
+    },
+    {
+      "predicate": {
+        "hardcoremod:temperature": 0.9
+      },
+      "model": "hardcoremod:item/thermometer_9"
+    }
+  ]
+}

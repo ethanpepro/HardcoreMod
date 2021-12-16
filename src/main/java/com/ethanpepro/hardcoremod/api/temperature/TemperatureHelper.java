@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TemperatureHelper {
+	// TODO: The performance cost might not be terrible on these functions, but find a way to cache these once all TemperatureData members are registered.
 	public static int getAbsoluteMinimumTemperature() {
 		int minimum = 0;
 
@@ -72,6 +73,7 @@ public class TemperatureHelper {
 	public static float calculateTargetTemperature(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos) {
 		float temperature = getEquilibriumTemperature();
 
+		// Mods cannot add their own modifier types because they are hardcoded here
 		for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
 			if (modifier instanceof StaticTemperatureModifier) {
 				temperature += ((StaticTemperatureModifier)modifier).getModifier(player, world, pos);

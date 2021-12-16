@@ -38,5 +38,9 @@
   "temperatures.burning.flavor.3": "Your body feels scorching hot.",
 
   "effect.hardcoremod.hypothermia": "Hypothermia",
-  "effect.hardcoremod.hyperthermia": "Hyperthermia"
+  "effect.hardcoremod.hyperthermia": "Hyperthermia",
+
+  "itemGroup.hardcoremod.tools": "Tools",
+
+  "item.hardcoremod.thermometer": "Thermometer"
 }

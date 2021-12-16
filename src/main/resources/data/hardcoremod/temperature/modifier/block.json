@@ -1,0 +1,15 @@
+{
+  "modifier": "1",
+  "horizontal": "2",
+  "vertical": "1",
+
+  "base": {
+    "minecraft:lava": "1",
+    "minecraft:fire": "1"
+  },
+
+  "lit": {
+    "minecraft:campfire": "1",
+    "minecraft:furnace": "1"
+  }
+}

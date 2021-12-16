@@ -53,12 +53,13 @@ public abstract class MixinInGameHud extends DrawableHelper {
 
 		if (playerEntity != null) {
 			int x = scaledWidth / 2 - 8;
+			// TODO: Interferes with text display when switching items.
 			int offset = (playerEntity.experienceLevel > 0) ? 54 : 48;
 			int y = scaledHeight - offset;
 
-			/*TemperatureComponent temperatureComponent = HardcoreModComponents.TEMPERATURE.get(playerEntity);
-
-			int temperature = temperatureComponent.getTemperature();*/
+			// TODO: Color interpolation with defined colors for freezing and burning.
+			// TODO: Make dynamic enough to scale with changes in the temperature range data.
+			// TODO: Bounce like the hunger bar a % every tick with faster movements towards extreme temperatures.
 
 			RenderSystem.setShaderTexture(0, MOD_GUI_ICONS_TEXTURE);
 

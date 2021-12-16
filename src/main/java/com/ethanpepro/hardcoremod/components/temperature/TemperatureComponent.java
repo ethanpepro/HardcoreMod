@@ -37,6 +37,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 		temperatureTimer = 0;
 	}
 
+	// TODO: Bias towards changing from equilibrium to any temperature is hard, while extreme to extreme is fast?
 	private int getTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
 
@@ -62,6 +63,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	private void onUpdateTemperature() {
 		String[] conditions = TemperatureHelper.getConditionsForTemperature(temperature);
 
+		// TODO: Not like this.
 		if (Objects.nonNull(conditions)) {
 			for (String condition : conditions) {
 				switch (condition) {
@@ -81,7 +83,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 			}
 		}
 
-		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature
+		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature.
 		String message = TemperatureHelper.getFlavorTextForTemperature(player.world, temperatureTarget);
 
 		if (Objects.nonNull(message)) {

@@ -8,7 +8,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 
-// Diegetic uses of the Notifier system
+// TODO: Diegetic uses of the Notifier system. Like when a player walks into a village or a stronghold.
 public class NotifierUtil {
 	public static void pushMessage(@NotNull PlayerEntity player, @NotNull String message) {
 		PacketByteBuf buf = PacketByteBufs.create();

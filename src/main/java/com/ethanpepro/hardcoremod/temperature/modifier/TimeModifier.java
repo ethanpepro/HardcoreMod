@@ -3,22 +3,19 @@ package com.ethanpepro.hardcoremod.temperature.modifier;
 import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.StaticTemperatureModifier;
 import com.google.gson.JsonObject;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-public class BiomeModifier implements StaticTemperatureModifier {
+public class TimeModifier implements StaticTemperatureModifier {
 	private final Identifier identifier;
 
 	private int modifier;
 
-	public BiomeModifier() {
-		identifier = new Identifier("hardcoremod", "biome");
+	public TimeModifier() {
+		identifier = new Identifier("hardcoremod", "time");
 	}
 
 	@Override
@@ -39,14 +36,12 @@ public class BiomeModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos) {
-		float center = world.getBiome(pos).getTemperature();
-		float north = world.getBiome(pos.add(0, 0, -16)).getTemperature();
-		float south = world.getBiome(pos.add(0, 0, 16)).getTemperature();
-		float east = world.getBiome(pos.add(16, 0, 0)).getTemperature();
-		float west = world.getBiome(pos.add(-16, 0, 0)).getTemperature();
+		float time = 0.0f;
 
-		float average = (center + north + south + east + west) / 5.0f;
+		if (world.getDimension().isNatural()) {
+			time = (float)Math.sin(world.getTimeOfDay() * ((2.0f * Math.PI) / 24000.0f));
+		}
 
-		return Math.round((average - 0.75f) / 1.25f) * modifier;
+		return Math.round(time) * modifier;
 	}
 }
