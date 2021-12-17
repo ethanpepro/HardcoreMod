@@ -14,7 +14,7 @@ public class HypothermiaStatusEffect extends StatusEffect {
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (entity instanceof PlayerEntity) {
-			entity.damage(DamageSource.GENERIC, 1.0f);
+			entity.damage(DamageSource.GENERIC, 2.0f);
 		}
 	}
 

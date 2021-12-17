@@ -1,5 +1,6 @@
 package com.ethanpepro.hardcoremod.api.temperature;
 
+import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.BaseTemperatureModifier;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.DynamicTemperatureModifier;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.StaticTemperatureModifier;

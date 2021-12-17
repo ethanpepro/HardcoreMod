@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.Difficulty;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -40,15 +41,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	// TODO: Bias towards changing from equilibrium to any temperature is hard, while extreme to extreme is fast?
 	private int getTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
-
-		int temperatureRange = 0;
-
-		if (temperatureTarget > 0) {
-			temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature();
-		} else {
-			temperatureRange = TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
-		}
-
+		int temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
 		int currentRange = Math.abs(temperature - temperatureTarget);
 
 		return Math.max(HardcoreModConfig.temperature.minimumTemperatureThreshold, HardcoreModConfig.temperature.maximumTemperatureThreshold - (currentRange * updateRange) / temperatureRange);
@@ -61,6 +54,15 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	}
 
 	private void onUpdateTemperature() {
+		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature.
+		String message = TemperatureHelper.getFlavorTextForTemperature(player.world, temperatureTarget);
+
+		if (Objects.nonNull(message)) {
+			NotifierUtil.pushMessage(player, message);
+		}
+	}
+
+	private void applyStatusEffects() {
 		String[] conditions = TemperatureHelper.getConditionsForTemperature(temperature);
 
 		// TODO: Not like this.
@@ -82,17 +84,6 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 				}
 			}
 		}
-
-		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature.
-		String message = TemperatureHelper.getFlavorTextForTemperature(player.world, temperatureTarget);
-
-		if (Objects.nonNull(message)) {
-			NotifierUtil.pushMessage(player, message);
-		}
-	}
-
-	public int getTemperature() {
-		return temperature;
 	}
 
 	@Override
@@ -122,6 +113,10 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 			return;
 		}
 
+		if (player.world.getDifficulty() == Difficulty.PEACEFUL) {
+			return;
+		}
+
 		if (player.isSpectator() || player.isCreative()) {
 			return;
 		}
@@ -134,7 +129,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 			temperatureTarget = calculateTargetTemperatureForPlayer(player);
 
-			HardcoreMod.LOGGER.info("{} -> {} ({}/{} ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold());
+			NotifierUtil.pushMessage(player, String.format("%d -> %d (%d/%d ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold()));
 		}
 
 		if (temperatureTimer >= getTemperatureUpdateThreshold()) {
@@ -149,6 +144,8 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 				onUpdateTemperature();
 			}
+
+			applyStatusEffects();
 		}
 
 		// TODO: We're always syncing every game tick because of temperatureTimer, find a way around this.

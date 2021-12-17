@@ -1,8 +1,8 @@
 {
   "freezing": {
     "name": "temperatures.freezing",
-    "min": "-5",
-    "max": "-4",
+    "min": "-10",
+    "max": "-8",
     "conditions": [
       "hypothermia"
     ],
@@ -14,8 +14,8 @@
   },
   "cold": {
     "name": "temperatures.cold",
-    "min": "-3",
-    "max": "-2",
+    "min": "-7",
+    "max": "-4",
     "conditions": [
       "default"
     ],
@@ -27,8 +27,8 @@
   },
   "temperate": {
     "name": "temperatures.temperate",
-    "min": "-1",
-    "max": "1",
+    "min": "-3",
+    "max": "3",
     "conditions": [
       "default"
     ],
@@ -40,8 +40,8 @@
   },
   "hot": {
     "name": "temperatures.hot",
-    "min": "2",
-    "max": "3",
+    "min": "4",
+    "max": "7",
     "conditions": [
       "default"
     ],
@@ -53,8 +53,8 @@
   },
   "burning": {
     "name": "temperatures.burning",
-    "min": "4",
-    "max": "5",
+    "min": "8",
+    "max": "10",
     "conditions": [
       "hyperthermia"
     ],

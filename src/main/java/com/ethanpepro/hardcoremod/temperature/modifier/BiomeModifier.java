@@ -9,7 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 
 public class BiomeModifier implements StaticTemperatureModifier {
@@ -47,6 +49,6 @@ public class BiomeModifier implements StaticTemperatureModifier {
 
 		float average = (center + north + south + east + west) / 5.0f;
 
-		return Math.round((average - 0.75f) / 1.25f) * modifier;
+		return Math.round((2.0f / 3.0f) * (average + 1.0f) - 1.0f) * modifier;
 	}
 }

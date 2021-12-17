@@ -74,6 +74,7 @@ public class BlockModifier implements StaticTemperatureModifier {
 	public float getModifier(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos) {
 		float sum = 0.0f;
 
+		// TODO: Absolutely needs to be optimized
 		// TODO: Blocks should affect temperature exponentially less with each occurrence, how to efficiently keep track of this?
 		for (BlockPos search : BlockPos.iterate(pos.add(-horizontal, -vertical, -horizontal), pos.add(horizontal, vertical, horizontal))) {
 			BlockState blockState = world.getBlockState(search);

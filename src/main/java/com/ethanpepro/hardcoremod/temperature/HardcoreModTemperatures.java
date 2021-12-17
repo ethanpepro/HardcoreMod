@@ -10,5 +10,7 @@ public class HardcoreModTemperatures {
 		TemperatureRegistry.register(new BlockModifier());
 		TemperatureRegistry.register(new BiomeModifier());
 		TemperatureRegistry.register(new TimeModifier());
+
+		// Armor has to check if clothing is on, combine
 	}
 }

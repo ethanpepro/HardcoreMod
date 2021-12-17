@@ -1,9 +1,11 @@
 package com.ethanpepro.hardcoremod.mixin;
 
+import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.components.temperature.TemperatureComponent;
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;

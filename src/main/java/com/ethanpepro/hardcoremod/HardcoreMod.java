@@ -21,10 +21,8 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -92,8 +90,7 @@ public class HardcoreMod implements ModInitializer {
 					String name = modifier.getIdentifier().getPath() + ".json";
 					Identifier file = new Identifier("hardcoremod", "temperature/modifier/" + name);
 
-					try {
-						InputStream stream = manager.getResource(file).getInputStream();
+					try (InputStream stream = manager.getResource(file).getInputStream()) {
 						InputStreamReader streamReader = new InputStreamReader(stream);
 						JsonReader jsonReader = new JsonReader(streamReader);
 

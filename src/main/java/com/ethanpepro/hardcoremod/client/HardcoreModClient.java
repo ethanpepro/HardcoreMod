@@ -14,9 +14,12 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,9 +39,15 @@ public class HardcoreModClient implements ClientModInitializer {
 			});
 		});
 
+		// TODO: Need to associate a thermometer with its position and cache its value, updating every configurable interval
 		// TODO: No more programmer art for the thermometer.
 		// TODO: Make thermometers get the player's target temperature in inventory and world temperature in frames and ground.
 		// TODO: Use 0.0f instead of 0.5f as our starting mark, look at clock code as a reference.
-		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), (itemStack, clientWorld, livingEntity, i) -> 0.5f);
+		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), new UnclampedModelPredicateProvider() {
+			@Override
+			public float unclampedCall(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) {
+				return 0.5f;
+			}
+		});
 	}
 }
