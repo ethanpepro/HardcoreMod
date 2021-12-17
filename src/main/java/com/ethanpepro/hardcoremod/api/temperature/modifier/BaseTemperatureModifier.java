@@ -5,10 +5,19 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public interface BaseTemperatureModifier {
-	void clearResources();
+	default void clearResources() {
 
-	void processResources(@NotNull JsonObject root);
+	}
 
-	@NotNull
-	Identifier getIdentifier();
+	default void processResources(@NotNull JsonObject root) {
+
+	}
+
+	default Identifier getIdentifier() {
+		return null;
+	}
+
+	default boolean affectsPlayers() {
+		return false;
+	}
 }

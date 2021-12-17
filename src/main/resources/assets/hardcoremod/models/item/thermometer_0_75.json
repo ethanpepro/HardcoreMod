@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hardcoremod:item/thermometer_8"
+    "layer0": "hardcoremod:item/thermometer_0_75"
   }
 }

@@ -6,6 +6,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public interface DynamicTemperatureModifier extends BaseTemperatureModifier {
-	// TODO: Add back the distinction between player and world modifiers.
-	float getModifier(@NotNull PlayerEntity player, @NotNull World world, @NotNull BlockPos pos, float temperature);
+	default float getEnvironmentalModifier(@NotNull World world, @NotNull BlockPos pos, float temperature) {
+		return temperature;
+	}
+
+	default float getPlayerModifier(@NotNull PlayerEntity player, float temperature) {
+		return getEnvironmentalModifier(player.getEntityWorld(), player.getBlockPos(), temperature);
+	}
 }

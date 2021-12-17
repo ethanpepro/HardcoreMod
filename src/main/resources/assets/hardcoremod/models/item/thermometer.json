@@ -1,62 +1,62 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hardcoremod:item/thermometer_4_5"
+    "layer0": "hardcoremod:item/thermometer_0_00"
   },
   "overrides": [
     {
       "predicate": {
-        "hardcoremod:temperature": 0.0
+        "hardcoremod:temperature": -1.00
       },
-      "model": "hardcoremod:item/thermometer_0"
+      "model": "hardcoremod:item/thermometer_-1_00"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.1
+        "hardcoremod:temperature": -0.75
       },
-      "model": "hardcoremod:item/thermometer_1"
+      "model": "hardcoremod:item/thermometer_-0_75"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.2
+        "hardcoremod:temperature": -0.50
       },
-      "model": "hardcoremod:item/thermometer_2"
+      "model": "hardcoremod:item/thermometer_-0_50"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.3
+        "hardcoremod:temperature": -0.25
       },
-      "model": "hardcoremod:item/thermometer_3"
+      "model": "hardcoremod:item/thermometer_-0_25"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.4
+        "hardcoremod:temperature": 0.00
       },
       "model": "hardcoremod:item/thermometer"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.6
+        "hardcoremod:temperature": 0.25
       },
-      "model": "hardcoremod:item/thermometer_6"
+      "model": "hardcoremod:item/thermometer_0_25"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.7
+        "hardcoremod:temperature": 0.50
       },
-      "model": "hardcoremod:item/thermometer_7"
+      "model": "hardcoremod:item/thermometer_0_50"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.8
+        "hardcoremod:temperature": 0.75
       },
-      "model": "hardcoremod:item/thermometer_8"
+      "model": "hardcoremod:item/thermometer_0_75"
     },
     {
       "predicate": {
-        "hardcoremod:temperature": 0.9
+        "hardcoremod:temperature": 1.00
       },
-      "model": "hardcoremod:item/thermometer_9"
+      "model": "hardcoremod:item/thermometer_1_00"
     }
   ]
 }

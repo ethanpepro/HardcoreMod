@@ -18,6 +18,7 @@ import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -41,13 +42,19 @@ public class HardcoreModClient implements ClientModInitializer {
 
 		// TODO: Need to associate a thermometer with its position and cache its value, updating every configurable interval
 		// TODO: No more programmer art for the thermometer.
-		// TODO: Make thermometers get the player's target temperature in inventory and world temperature in frames and ground.
-		// TODO: Use 0.0f instead of 0.5f as our starting mark, look at clock code as a reference.
-		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), new UnclampedModelPredicateProvider() {
-			@Override
-			public float unclampedCall(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) {
-				return 0.5f;
+		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), (itemStack, clientWorld, livingEntity, i) -> {
+			float temperature = 0.0f;
+
+			if (livingEntity instanceof PlayerEntity) {
+				temperature = TemperatureHelper.calculateTemperature((PlayerEntity)livingEntity, livingEntity.getEntityWorld(), livingEntity.getBlockPos());
 			}
+
+			ItemFrameEntity frame = itemStack.getFrame();
+			if (frame != null) {
+				temperature = TemperatureHelper.calculateTemperature(null, frame.getEntityWorld(), frame.getBlockPos());
+			}
+
+			return TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(temperature);
 		});
 	}
 }

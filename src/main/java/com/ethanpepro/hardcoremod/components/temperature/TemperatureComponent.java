@@ -48,7 +48,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
-		float target = TemperatureHelper.calculateTargetTemperature(player, player.getEntityWorld(), player.getBlockPos());
+		float target = TemperatureHelper.calculateTemperature(player, player.getEntityWorld(), player.getBlockPos());
 
 		return TemperatureHelper.clamp(target);
 	}

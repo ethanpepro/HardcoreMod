@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.NotNull;
 
-// Mods should not be able to add new temperature data ranges
 public class TemperatureDataRegistry {
 	private static final Object2ObjectOpenHashMap<String, TemperatureData> temperatureData = new Object2ObjectOpenHashMap<>();
 
