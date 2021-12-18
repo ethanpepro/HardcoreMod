@@ -38,7 +38,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 		temperatureTimer = 0;
 	}
 
-	// TODO: Bias towards changing from equilibrium to any temperature is hard, while extreme to extreme is fast?
+	// TODO: Bias amount when current temperature is closer to an extreme target temperature.
 	private int getTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
 		int temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
@@ -86,6 +86,10 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 		}
 	}
 
+	public int getTemperature() {
+		return temperature;
+	}
+
 	@Override
 	public boolean shouldSyncWith(ServerPlayerEntity player) {
 		// TODO: Find all edge cases. This should sync with the player and spectators but should also save precious cycles if we don't have to always sync.
@@ -129,6 +133,7 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 
 			temperatureTarget = calculateTargetTemperatureForPlayer(player);
 
+			// TODO: Remove, this is a debugging tool.
 			NotifierUtil.pushMessage(player, String.format("%d -> %d (%d/%d ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold()));
 		}
 

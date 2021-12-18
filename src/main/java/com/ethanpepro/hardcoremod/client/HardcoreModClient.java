@@ -40,7 +40,7 @@ public class HardcoreModClient implements ClientModInitializer {
 			});
 		});
 
-		// TODO: Need to associate a thermometer with its position and cache its value, updating every configurable interval
+		// TODO: Need to associate a thermometer with its position and cache its value, updating every configurable interval.
 		// TODO: No more programmer art for the thermometer.
 		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), (itemStack, clientWorld, livingEntity, i) -> {
 			float temperature = 0.0f;

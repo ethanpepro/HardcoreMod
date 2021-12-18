@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -104,11 +105,8 @@ public class TemperatureHelper {
 	}
 
 	public static float convertTemperatureToAbsoluteRangeRatio(float temperature) {
-		float percentage = 0.0f;
-
 		int range = getAbsoluteTemperatureRange();
-
-		percentage = (2.0f / range) * (temperature - getAbsoluteMinimumTemperature()) - 1.0f;
+		float percentage = (2.0f / range) * (temperature - getAbsoluteMinimumTemperature()) - 1.0f;
 
 		return MathHelper.clamp(percentage, -1.0f, 1.0f);
 	}

@@ -68,6 +68,8 @@ public class HardcoreMod implements ModInitializer {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
+				TemperatureDataRegistry.finish();
 			}
 		});
 

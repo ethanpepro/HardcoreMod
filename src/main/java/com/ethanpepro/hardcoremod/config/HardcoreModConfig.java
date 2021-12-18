@@ -11,6 +11,18 @@ import de.siphalor.tweed4.tailor.cloth.ClothData;
 @ATweedConfig(scope = ConfigScope.SMALLEST, environment = ConfigEnvironment.SYNCED, tailors = {"tweed4:cloth"})
 @ClothData(modid = "hardcoremod")
 public class HardcoreModConfig {
+	public static class Accessibility {
+		public boolean enableOrbDisplay = true;
+
+		public boolean enableOrbMovements = true;
+
+		@AConfigEntry(constraints = @AConfigConstraint(value = RangeConstraint.class, param = "20.."))
+		public int orbMovementMaximumTime = 200;
+	}
+
+	@AConfigEntry(environment = ConfigEnvironment.CLIENT)
+	public static Accessibility accessibility;
+
 	public static class Notifier {
 		public boolean enabled = true;
 

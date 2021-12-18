@@ -1,6 +1,11 @@
 {
   "tweed4_tailor_screen.screen.hardcoremod": "Hardcore Mod Options",
 
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbDisplay": "Enable Temperature Orb",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbMovements": "Enable Temperature Orb Movement",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.orbMovementMaximumTime": "Maximum Orb Movement Time",
+
   "tweed4_tailor_screen.screen.hardcoremod.notifier": "Notifier",
   "tweed4_tailor_screen.screen.hardcoremod.notifier.enabled": "Enable Notifier",
   "tweed4_tailor_screen.screen.hardcoremod.notifier.maximumAge": "Maximum Message Age",
