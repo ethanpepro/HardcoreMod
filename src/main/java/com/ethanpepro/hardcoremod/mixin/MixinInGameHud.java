@@ -1,20 +1,15 @@
 package com.ethanpepro.hardcoremod.mixin;
 
-import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
-import com.ethanpepro.hardcoremod.components.temperature.TemperatureComponent;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,8 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Random;
 
 @Mixin(InGameHud.class)
@@ -76,6 +69,7 @@ public abstract class MixinInGameHud extends DrawableHelper {
 			int x = scaledWidth / 2 - 8;
 			// TODO: Interferes with text display when switching items.
 			// TODO: Mixin renderHeldItemTooltip.
+			// TODO: Also interferes with ender dragon bar.
 			int offset = (playerEntity.experienceLevel > 0) ? 54 : 48;
 			int y = scaledHeight - offset;
 
@@ -83,7 +77,7 @@ public abstract class MixinInGameHud extends DrawableHelper {
 			float percentage = Math.abs(TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(temperature));
 
 			if (HardcoreModConfig.accessibility.enableOrbMovements) {
-				int interval = (int)(HardcoreModConfig.accessibility.orbMovementMaximumTime * (float) Math.pow(1.0f / HardcoreModConfig.accessibility.orbMovementMaximumTime, percentage));
+				int interval = (int)(HardcoreModConfig.accessibility.orbMovementMaximumTime * (float)Math.pow(1.0f / HardcoreModConfig.accessibility.orbMovementMaximumTime, percentage));
 
 				if (ticks % interval == 0) {
 					y += random.nextInt(3) - 1;

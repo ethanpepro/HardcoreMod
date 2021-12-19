@@ -34,6 +34,13 @@ repositories {
 	}
 }
 
+sourceSets {
+	testmod {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -53,6 +60,8 @@ dependencies {
 	modApi "de.siphalor.tweed4:tweed4-data-gson-1.18:1.1.0+"
 
 	modRuntimeOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+	testmodImplementation sourceSets.main.output
 }
 
 processResources {

@@ -1,5 +1,6 @@
 package com.ethanpepro.hardcoremod.api.temperature.registry;
 
+import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.api.temperature.modifier.BaseTemperatureModifier;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -11,7 +12,9 @@ public class TemperatureRegistry {
 
 	public static void register(@NotNull BaseTemperatureModifier modifier) {
 		Identifier identifier = modifier.getIdentifier();
-
+		
+		HardcoreMod.LOGGER.info("register tried for {}", identifier);
+		
 		if (!temperatureModifiers.containsKey(identifier)) {
 			temperatureModifiers.put(identifier, modifier);
 		}

@@ -1,0 +1,7 @@
+{
+  "modifier": 1.0,
+
+  "rainModifier": -2.0,
+  "snowModifier": -4.0,
+  "waterModifier": -2.0
+}

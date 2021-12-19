@@ -39,18 +39,19 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 	}
 
 	// TODO: Bias amount when current temperature is closer to an extreme target temperature.
+	// TODO: Feed the unclamped temperature value into this?
 	private int getTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
 		int temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
 		int currentRange = Math.abs(temperature - temperatureTarget);
-
+		
 		return Math.max(HardcoreModConfig.temperature.minimumTemperatureThreshold, HardcoreModConfig.temperature.maximumTemperatureThreshold - (currentRange * updateRange) / temperatureRange);
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
 		float target = TemperatureHelper.calculateTemperature(player, player.getEntityWorld(), player.getBlockPos());
 
-		return TemperatureHelper.clamp(target);
+		return TemperatureHelper.clampAndRound(target);
 	}
 
 	private void onUpdateTemperature() {
@@ -132,9 +133,8 @@ public class TemperatureComponent implements ComponentV3, AutoSyncedComponent, S
 			temperatureTargetTimer = 0;
 
 			temperatureTarget = calculateTargetTemperatureForPlayer(player);
-
-			// TODO: Remove, this is a debugging tool.
-			NotifierUtil.pushMessage(player, String.format("%d -> %d (%d/%d ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold()));
+			
+			HardcoreMod.LOGGER.info("{} -> {} ({}/{} ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold());
 		}
 
 		if (temperatureTimer >= getTemperatureUpdateThreshold()) {

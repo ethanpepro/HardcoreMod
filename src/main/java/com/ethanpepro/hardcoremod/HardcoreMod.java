@@ -6,7 +6,6 @@ import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureDataRegist
 import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureRegistry;
 import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.item.HardcoreModItems;
-import com.ethanpepro.hardcoremod.temperature.HardcoreModTemperatures;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -73,8 +72,6 @@ public class HardcoreMod implements ModInitializer {
 			}
 		});
 
-		HardcoreModTemperatures.register();
-
 		// TODO: How would this work for other mods?
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 			@Override
@@ -91,7 +88,7 @@ public class HardcoreMod implements ModInitializer {
 				for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
 					String name = modifier.getIdentifier().getPath() + ".json";
 					Identifier file = new Identifier("hardcoremod", "temperature/modifier/" + name);
-
+					
 					try (InputStream stream = manager.getResource(file).getInputStream()) {
 						InputStreamReader streamReader = new InputStreamReader(stream);
 						JsonReader jsonReader = new JsonReader(streamReader);

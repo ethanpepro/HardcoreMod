@@ -1,0 +1,27 @@
+{
+  "modifier": 1.0,
+
+  "searchHorizontal": 2,
+  "searchVertical": 1,
+
+  "defaultBlockMap": {
+    "minecraft:torch": 1,
+    "minecraft:lava": 1,
+    "minecraft:fire": 1,
+    "minecraft:snow": -1,
+    "minecraft:ice": -1,
+    "minecraft:packed_ice": -1,
+    "minecraft:blue_ice": -1,
+    "minecraft:nether_portal": 2,
+    "minecraft:end_portal": -2,
+    "minecraft:soul_torch": 1
+  },
+
+  "litBlockMap": {
+    "minecraft:furnace": 1,
+    "minecraft:campfire": 1,
+    "minecraft:blast_furnace": 1,
+    "minecraft:smoker": 1,
+    "minecraft:soul_campfire": 1
+  }
+}

@@ -2,6 +2,7 @@ package com.ethanpepro.hardcoremod.api.temperature.modifier;
 
 import com.google.gson.JsonObject;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public interface BaseTemperatureModifier {
@@ -17,7 +18,13 @@ public interface BaseTemperatureModifier {
 		return null;
 	}
 
-	default boolean affectsPlayers() {
+	default boolean shouldNotRun(@NotNull World world) {
+		if (!world.getDimension().isNatural()) {
+			return true;
+		}
+
+		// TODO: Other conditions.
+
 		return false;
 	}
 }

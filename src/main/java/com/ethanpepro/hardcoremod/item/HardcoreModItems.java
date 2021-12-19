@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class HardcoreModItems {
-	public static final Item THERMOMETER = new Item(new FabricItemSettings().group(HardcoreModItemGroup.TOOLS));
+	public static final Item THERMOMETER = new Item(new FabricItemSettings().maxCount(1).group(HardcoreModItemGroup.TOOLS));
 
 	public static void register() {
 		Registry.register(Registry.ITEM, new Identifier("hardcoremod", "thermometer"), THERMOMETER);

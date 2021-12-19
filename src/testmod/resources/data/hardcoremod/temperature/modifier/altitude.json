@@ -1,0 +1,9 @@
+{
+  "modifier": 1.0,
+
+  "searchHorizontal": 3,
+  "undergroundModifier": -0.6,
+
+  "altitudeConstant": -5.41067,
+  "altitudeBase": 0.987637
+}
