@@ -4,6 +4,7 @@
   "package": "com.ethanpepro.hardcoremod.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "PlayerEntityMixin"
   ],
   "client": [
     "MixinInGameHud"

@@ -1,9 +1,9 @@
 package com.ethanpepro.hardcoremod;
 
-import com.ethanpepro.hardcoremod.api.temperature.TemperatureData;
-import com.ethanpepro.hardcoremod.api.temperature.modifier.BaseTemperatureModifier;
-import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureDataRegistry;
-import com.ethanpepro.hardcoremod.api.temperature.registry.TemperatureRegistry;
+import com.ethanpepro.hardcoremod.temperature.data.TemperatureData;
+import com.ethanpepro.hardcoremod.temperature.modifier.BaseTemperatureModifier;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
+import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
 import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.item.HardcoreModItems;
 import com.google.gson.Gson;
@@ -71,8 +71,7 @@ public class HardcoreMod implements ModInitializer {
 				TemperatureDataRegistry.finish();
 			}
 		});
-
-		// TODO: How would this work for other mods?
+		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 			@Override
 			public Identifier getFabricId() {
@@ -81,11 +80,11 @@ public class HardcoreMod implements ModInitializer {
 
 			@Override
 			public void reload(ResourceManager manager) {
-				for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
+				for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
 					modifier.clearResources();
 				}
 
-				for (BaseTemperatureModifier modifier : TemperatureRegistry.getModifiers().values()) {
+				for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
 					String name = modifier.getIdentifier().getPath() + ".json";
 					Identifier file = new Identifier("hardcoremod", "temperature/modifier/" + name);
 					

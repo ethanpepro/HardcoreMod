@@ -1,67 +1,67 @@
 {
   "freezing": {
-    "name": "temperatures.freezing",
+    "name": "freezing",
     "min": "-10",
     "max": "-8",
     "conditions": [
       "hypothermia"
     ],
     "flavorText": [
-      "temperatures.freezing.flavor.1",
-      "temperatures.freezing.flavor.2",
-      "temperatures.freezing.flavor.3"
+      "flavor.1",
+      "flavor.2",
+      "flavor.3"
     ]
   },
   "cold": {
-    "name": "temperatures.cold",
+    "name": "cold",
     "min": "-7",
     "max": "-4",
     "conditions": [
       "default"
     ],
     "flavorText": [
-      "temperatures.cold.flavor.1",
-      "temperatures.cold.flavor.2",
-      "temperatures.cold.flavor.3"
+      "flavor.1",
+      "flavor.2",
+      "flavor.3"
     ]
   },
   "temperate": {
-    "name": "temperatures.temperate",
+    "name": "temperate",
     "min": "-3",
     "max": "3",
     "conditions": [
       "default"
     ],
     "flavorText": [
-      "temperatures.temperate.flavor.1",
-      "temperatures.temperate.flavor.2",
-      "temperatures.temperate.flavor.3"
+      "flavor.1",
+      "flavor.2",
+      "flavor.3"
     ]
   },
   "hot": {
-    "name": "temperatures.hot",
+    "name": "hot",
     "min": "4",
     "max": "7",
     "conditions": [
       "default"
     ],
     "flavorText": [
-      "temperatures.hot.flavor.1",
-      "temperatures.hot.flavor.2",
-      "temperatures.hot.flavor.3"
+      "flavor.1",
+      "flavor.2",
+      "flavor.3"
     ]
   },
   "burning": {
-    "name": "temperatures.burning",
+    "name": "burning",
     "min": "8",
     "max": "10",
     "conditions": [
       "hyperthermia"
     ],
     "flavorText": [
-      "temperatures.burning.flavor.1",
-      "temperatures.burning.flavor.2",
-      "temperatures.burning.flavor.3"
+      "flavor.1",
+      "flavor.2",
+      "flavor.3"
     ]
   }
 }

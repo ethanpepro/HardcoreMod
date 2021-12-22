@@ -1,6 +1,6 @@
 package com.ethanpepro.hardcoremod.client.item;
 
-import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.item.UnclampedModelPredicateProvider;
@@ -20,6 +20,16 @@ public class ThermometerModelPredicateProvider implements UnclampedModelPredicat
 		counter = 0;
 	}
 	
+	public void cacheThink() {
+		counter++;
+		
+		if (counter >= HardcoreModConfig.temperature.targetThreshold) {
+			counter = 0;
+			
+			cache.clear();
+		}
+	}
+	
 	// TODO: Why is this deprecated?
 	@Override
 	public float call(ItemStack itemStack, @Nullable ClientWorld clientWorld, @Nullable LivingEntity livingEntity, int i) {
@@ -33,27 +43,10 @@ public class ThermometerModelPredicateProvider implements UnclampedModelPredicat
 			return 0.0f;
 		}
 		
-		UUID uuid = entity.getUuid();
-		
-		if (cache.containsKey(uuid)) {
-			return cache.get(uuid);
-		}
-		
-		float temperature = TemperatureHelper.calculateTemperature(entity, entity.getEntityWorld(), entity.getBlockPos());
-		float value = TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(temperature);
-		
-		cache.put(uuid, value);
-		
-		return value;
-	}
-	
-	public void counterThink() {
-		counter++;
-		
-		if (counter >= HardcoreModConfig.temperature.targetThreshold) {
-			counter = 0;
+		return cache.computeIfAbsent(entity.getUuid(), value -> {
+			float temperature = TemperatureHelper.calculateTemperature(entity, entity.getEntityWorld(), entity.getBlockPos());
 			
-			cache.clear();
-		}
+			return TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(temperature);
+		});
 	}
 }

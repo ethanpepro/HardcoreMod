@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "icon": "hardcoremod:gui/slots/chest",
+  "tooltip_predicates": [
+    "trinkets:none"
+  ]
+}

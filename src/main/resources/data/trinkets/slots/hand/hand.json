@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "icon": "hardcoremod:gui/slots/hand",
+  "tooltip_predicates": [
+    "trinkets:none"
+  ]
+}

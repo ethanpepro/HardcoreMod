@@ -18,26 +18,42 @@ repositories {
 	// for more information about repositories.
 
 	maven {
-		url "https://ladysnake.jfrog.io/artifactory/mods"
+		url 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
 	maven {
-		url "https://maven.siphalor.de/"
+		url 'https://maven.siphalor.de/'
 	}
 	maven {
-		url "https://maven.terraformersmc.com/releases"
+		url 'https://maven.terraformersmc.com/releases'
 	}
 	maven {
-		url "https://jitpack.io"
+		url 'https://jitpack.io'
 	}
 	maven {
-		url "https://maven.shedaniel.me/"
+		url 'https://maven.shedaniel.me/'
 	}
 }
 
 sourceSets {
-	testmod {
+	example {
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
+	}
+}
+
+loom {
+	runs {
+		exampleClient {
+			client()
+			name = "Example Client"
+			source sourceSets.example
+		}
+
+		exampleServer {
+			server()
+			name = "Example Server"
+			source sourceSets.example
+		}
 	}
 }
 
@@ -59,9 +75,11 @@ dependencies {
 	modApi "de.siphalor.tweed4:tweed4-data-hjson-1.18:1.1.0+"
 	modApi "de.siphalor.tweed4:tweed4-data-gson-1.18:1.1.0+"
 
+	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+
 	modRuntimeOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-	testmodImplementation sourceSets.main.output
+	exampleImplementation sourceSets.main.output
 }
 
 processResources {

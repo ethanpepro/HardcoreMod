@@ -1,9 +1,11 @@
 package com.ethanpepro.hardcoremod.mixin;
 
-import com.ethanpepro.hardcoremod.api.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
+@Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class MixinInGameHud extends DrawableHelper {
 	private static final Identifier MOD_GUI_ICONS_TEXTURE = new Identifier("hardcoremod", "textures/gui/icons.png");

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "hardcoremod-example",
+  "version": "1.0.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ethanpepro.hardcoremod.HardcoreModExample"
+    ],
+    "client": [
+      "com.ethanpepro.hardcoremod.client.HardcoreModExampleClient"
+    ]
+  }
+}

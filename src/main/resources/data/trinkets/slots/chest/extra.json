@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "order": -1,
+  "icon": "hardcoremod:gui/slots/extra",
+  "tooltip_predicates": [
+    "trinkets:none"
+  ]
+}

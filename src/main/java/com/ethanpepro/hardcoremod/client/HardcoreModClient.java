@@ -1,42 +1,25 @@
 package com.ethanpepro.hardcoremod.client;
 
-import com.ethanpepro.hardcoremod.api.network.HardcoreModNetworking;
-import com.ethanpepro.hardcoremod.client.gui.hud.NotifierHud;
 import com.ethanpepro.hardcoremod.client.item.ThermometerModelPredicateProvider;
 import com.ethanpepro.hardcoremod.item.HardcoreModItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class HardcoreModClient implements ClientModInitializer {
-	public static NotifierHud notifierHud;
-	
 	public static ThermometerModelPredicateProvider thermometerModelPredicateProvider;
 
 	@Override
 	public void onInitializeClient() {
-		HudRenderCallback.EVENT.register(notifierHud = new NotifierHud());
-
-		ClientPlayNetworking.registerGlobalReceiver(HardcoreModNetworking.PUSH_MESSAGE, (client, handler, buf, responseSender) -> {
-			String message = buf.readString();
-
-			client.execute(() -> {
-				notifierHud.pushMessage(message);
-			});
-		});
-
-		// TODO: Need to associate a thermometer with its position and cache its value, updating every configurable interval.
 		// TODO: No more programmer art for the thermometer.
 		FabricModelPredicateProviderRegistry.register(HardcoreModItems.THERMOMETER, new Identifier("hardcoremod", "temperature"), thermometerModelPredicateProvider = new ThermometerModelPredicateProvider());
 		
 		ClientTickEvents.END_WORLD_TICK.register(world -> {
-			thermometerModelPredicateProvider.counterThink();
+			thermometerModelPredicateProvider.cacheThink();
 		});
 	}
 }

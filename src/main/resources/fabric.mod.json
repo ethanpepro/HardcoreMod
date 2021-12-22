@@ -23,9 +23,6 @@
     "client": [
       "com.ethanpepro.hardcoremod.client.HardcoreModClient"
     ],
-    "server": [
-      "com.ethanpepro.hardcoremod.server.HardcoreModDedicatedServer"
-    ],
     "cardinal-components-entity": [
       "com.ethanpepro.hardcoremod.components.HardcoreModComponents"
     ],
@@ -43,7 +40,7 @@
   },
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.12.12",
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17"

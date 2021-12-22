@@ -17,35 +17,44 @@
   "tweed4_tailor_screen.screen.hardcoremod.temperature.minimumTemperatureThreshold": "Temperature Minimum Update Rate",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.maximumTemperatureThreshold": "Temperature Maximum Update Rate",
 
-  "temperatures.freezing": "Freezing",
-  "temperatures.freezing.flavor.1": "Your fingers ache and numb with the cold.",
-  "temperatures.freezing.flavor.2": "Your skin begins to freeze.",
-  "temperatures.freezing.flavor.3": "Your muscles stiffen completely.",
+  "hardcoremod.temperature.freezing": "Freezing",
+  "hardcoremod.temperature.freezing.flavor.1": "Your fingers ache and numb with the cold.",
+  "hardcoremod.temperature.freezing.flavor.2": "Your skin begins to freeze.",
+  "hardcoremod.temperature.freezing.flavor.3": "Your muscles stiffen completely.",
 
-  "temperatures.cold": "Cold",
-  "temperatures.cold.flavor.1": "You worry about developing hypothermia.",
-  "temperatures.cold.flavor.2": "There is a slight nip in the air.",
-  "temperatures.cold.flavor.3": "Your fingers tingle with the cold temperature.",
+  "hardcoremod.temperature.cold": "Cold",
+  "hardcoremod.temperature.cold.flavor.1": "You worry about developing hypothermia.",
+  "hardcoremod.temperature.cold.flavor.2": "There is a slight nip in the air.",
+  "hardcoremod.temperature.cold.flavor.3": "Your fingers tingle with the cold temperature.",
 
-  "temperatures.temperate": "Temperate",
-  "temperatures.temperate.flavor.1": "Your body feels fine.",
-  "temperatures.temperate.flavor.2": "Your body feels at peace with the surroundings.",
-  "temperatures.temperate.flavor.3": "Everything feels fine.",
+  "hardcoremod.temperature.temperate": "Temperate",
+  "hardcoremod.temperature.temperate.flavor.1": "Your body feels fine.",
+  "hardcoremod.temperature.temperate.flavor.2": "Your body feels at peace with the surroundings.",
+  "hardcoremod.temperature.temperate.flavor.3": "Everything feels fine.",
 
-  "temperatures.hot": "Hot",
-  "temperatures.hot.flavor.1": "You worry about overheating.",
-  "temperatures.hot.flavor.2": "Sweat drips from your brow.",
-  "temperatures.hot.flavor.3": "Is that a mirage?",
+  "hardcoremod.temperature.hot": "Hot",
+  "hardcoremod.temperature.hot.flavor.1": "You worry about overheating.",
+  "hardcoremod.temperature.hot.flavor.2": "Sweat drips from your brow.",
+  "hardcoremod.temperature.hot.flavor.3": "Is that a mirage?",
 
-  "temperatures.burning": "Burning",
-  "temperatures.burning.flavor.1": "You can feel your blood boil.",
-  "temperatures.burning.flavor.2": "Your skin boils in the intense heat.",
-  "temperatures.burning.flavor.3": "Your body feels scorching hot.",
+  "hardcoremod.temperature.burning": "Burning",
+  "hardcoremod.temperature.burning.flavor.1": "You can feel your blood boil.",
+  "hardcoremod.temperature.burning.flavor.2": "Your skin boils in the intense heat.",
+  "hardcoremod.temperature.burning.flavor.3": "Your body feels scorching hot.",
 
   "effect.hardcoremod.hypothermia": "Hypothermia",
   "effect.hardcoremod.hyperthermia": "Hyperthermia",
 
   "itemGroup.hardcoremod.tools": "Tools",
+  "itemGroup.hardcoremod.clothing": "Clothing",
 
-  "item.hardcoremod.thermometer": "Thermometer"
+  "item.hardcoremod.thermometer": "Thermometer",
+
+  "trinkets.slot.head.head": "Head",
+  "trinkets.slot.chest.chest": "Chest",
+  "trinkets.slot.chest.extra": "Chest (Extra)",
+  "trinkets.slot.legs.legs": "Legs",
+  "trinkets.slot.feet.feet": "Feet",
+  "trinkets.slot.offhand.offhand": "Offhand",
+  "trinkets.slot.hand.hand": "Hand"
 }
