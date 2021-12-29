@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hardcoremod:yarn"
+    }
+  },
+  "result": {
+    "item": "hardcoremod-example:face_wrap"
+  }
+}

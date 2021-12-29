@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " #",
+    "#L"
+  ],
+  "key": {
+    "#": {
+      "item": "hardcoremod:yarn"
+    },
+    "L": {
+      "item": "hardcoremod:leather_strips"
+    }
+  },
+  "result": {
+    "item": "hardcoremod-example:bracer"
+  }
+}

@@ -1,5 +1,6 @@
 package com.ethanpepro.hardcoremod.temperature.modifier;
 
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -36,7 +37,7 @@ public class TimeModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (shouldNotRun(world)) {
+		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
 			return 0.0f;
 		}
 

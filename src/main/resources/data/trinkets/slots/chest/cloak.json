@@ -1,7 +1,7 @@
 {
   "replace": true,
   "order": -1,
-  "icon": "hardcoremod:gui/slots/extra",
+  "icon": "hardcoremod:gui/slots/cloak",
   "tooltip_predicates": [
     "trinkets:none"
   ]

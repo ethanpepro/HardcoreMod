@@ -1,0 +1,10 @@
+{
+  "weatheringProtectiveClothes": [
+    "hardcoremod-example:casual_cloak",
+    "hardcoremod-example:formal_cloak"
+  ],
+  "powderSnowWalkableClothes": [
+    "hardcoremod-example:shoes",
+    "hardcoremod-example:boots"
+  ]
+}

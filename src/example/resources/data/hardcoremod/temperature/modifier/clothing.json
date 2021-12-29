@@ -1,22 +1,52 @@
 {
   "modifier": 1.0,
 
-  "shouldRust": true,
-  "rustChance": 0.1,
-  "rustMaxDamage": 4,
-  "rustMaterials": [
-    "chainmail",
-    "iron"
-  ],
+  "nakedModifier": 1.1,
+  "armorModifier": 1.2,
+  "feetModifier": 1.1,
 
   "clothingDataMap": {
+    "hardcoremod-example:face_cap": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:arming_cap": [
+      "addColdPoint"
+    ],
+    "hardcoremod-example:tunic": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:gambeson": [
+      "addColdPoint"
+    ],
     "hardcoremod-example:casual_cloak": [
-      "resistsHeat",
-      "preventsRust"
+      "addHeatPoint"
     ],
     "hardcoremod-example:formal_cloak": [
-      "resistsCold",
-      "preventsRust"
+      "addColdPoint"
+    ],
+    "hardcoremod-example:trousers": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:greaves": [
+      "addColdPoint"
+    ],
+    "hardcoremod-example:shoes": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:boots": [
+      "addColdPoint"
+    ],
+    "hardcoremod-example:glove": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:bracer": [
+      "addColdPoint"
+    ],
+    "hardcoremod-example:offhand_glove": [
+      "addHeatPoint"
+    ],
+    "hardcoremod-example:offhand_bracer": [
+      "addColdPoint"
     ]
   }
 }

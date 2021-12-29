@@ -40,7 +40,7 @@ public class DimensionModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (shouldNotRun(world)) {
+		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
 			return 0.0f;
 		}
 

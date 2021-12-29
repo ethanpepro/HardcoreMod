@@ -1,21 +1,29 @@
 {
   "tweed4_tailor_screen.screen.hardcoremod": "Hardcore Mod Options",
 
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbDisplay": "Enable Temperature Orb",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbMovements": "Enable Temperature Orb Movement",
-  "tweed4_tailor_screen.screen.hardcoremod.accessibility.orbMovementMaximumTime": "Maximum Orb Movement Time",
-
-  "tweed4_tailor_screen.screen.hardcoremod.notifier": "Notifier",
-  "tweed4_tailor_screen.screen.hardcoremod.notifier.enabled": "Enable Notifier",
-  "tweed4_tailor_screen.screen.hardcoremod.notifier.maximumAge": "Maximum Message Age",
-  "tweed4_tailor_screen.screen.hardcoremod.notifier.maximumMessages": "Maximum Message Count",
-
   "tweed4_tailor_screen.screen.hardcoremod.temperature": "Temperature",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.enabled": "Enable Temperature System",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.targetThreshold": "Target Temperature Update Rate",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.minimumTemperatureThreshold": "Temperature Minimum Update Rate",
   "tweed4_tailor_screen.screen.hardcoremod.temperature.maximumTemperatureThreshold": "Temperature Maximum Update Rate",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.freezingTemperatureColor": "Freezing Temperature Color",
+  "tweed4_tailor_screen.screen.hardcoremod.temperature.burningTemperatureColor": "Burning Temperature Color",
+
+  "tweed4_tailor_screen.screen.hardcoremod.rust": "Rust",
+  "tweed4_tailor_screen.screen.hardcoremod.rust.enableRust": "Enable Rusting",
+  "tweed4_tailor_screen.screen.hardcoremod.rust.rustCheckInterval": "Rust Chance Interval",
+  "tweed4_tailor_screen.screen.hardcoremod.rust.rustChance": "Rust Chance",
+  "tweed4_tailor_screen.screen.hardcoremod.rust.rustMaxDamage": "Maximum Rust Damage",
+  "tweed4_tailor_screen.screen.hardcoremod.rust.materialsThatRust": "Materials That Rust",
+
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility": "Accessibility",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbDisplay": "Enable Temperature Orb",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableOrbMovements": "Enable Temperature Orb Movement",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.orbMovementMaximumTime": "Maximum Orb Movement Time",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.enableMessages": "Enable Messages",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.maxMessages": "Maximum Messages",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageLifetime": "Message Lifetime",
+  "tweed4_tailor_screen.screen.hardcoremod.accessibility.messageColor": "Message Color",
 
   "hardcoremod.temperature.freezing": "Freezing",
   "hardcoremod.temperature.freezing.flavor.1": "Your fingers ache and numb with the cold.",
@@ -42,6 +50,8 @@
   "hardcoremod.temperature.burning.flavor.2": "Your skin boils in the intense heat.",
   "hardcoremod.temperature.burning.flavor.3": "Your body feels scorching hot.",
 
+  "hardcoremod.temperature.rust": "Your armor begins to slowly rust.",
+
   "effect.hardcoremod.hypothermia": "Hypothermia",
   "effect.hardcoremod.hyperthermia": "Hyperthermia",
 
@@ -49,10 +59,12 @@
   "itemGroup.hardcoremod.clothing": "Clothing",
 
   "item.hardcoremod.thermometer": "Thermometer",
+  "item.hardcoremod.leather_strips": "Leather Strips",
+  "item.hardcoremod.yarn": "Yarn",
 
   "trinkets.slot.head.head": "Head",
   "trinkets.slot.chest.chest": "Chest",
-  "trinkets.slot.chest.extra": "Chest (Extra)",
+  "trinkets.slot.chest.cloak": "Cloak",
   "trinkets.slot.legs.legs": "Legs",
   "trinkets.slot.feet.feet": "Feet",
   "trinkets.slot.offhand.offhand": "Offhand",

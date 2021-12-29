@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hardcoremod:yarn"
+    },
+    {
+      "item": "hardcoremod:yarn"
+    },
+    {
+      "item": "hardcoremod:yarn"
+    },
+    {
+      "item": "hardcoremod:yarn"
+    }
+  ],
+  "result": {
+    "item": "minecraft:white_wool"
+  }
+}

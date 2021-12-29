@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class TemperatureModifierRegistry {
-	private static final Object2ObjectOpenHashMap<Identifier, BaseTemperatureModifier> temperatureModifiers = new Object2ObjectOpenHashMap<>();
+	private static final Object2ObjectOpenHashMap<Identifier, BaseTemperatureModifier> temperatureModifiers;
 
 	public static void register(@NotNull BaseTemperatureModifier modifier) {
 		Identifier identifier = modifier.getIdentifier();
@@ -20,5 +20,9 @@ public class TemperatureModifierRegistry {
 	@NotNull
 	public static ImmutableMap<Identifier, BaseTemperatureModifier> getModifiers() {
 		return ImmutableMap.copyOf(temperatureModifiers);
+	}
+	
+	static {
+		temperatureModifiers = new Object2ObjectOpenHashMap<>();
 	}
 }

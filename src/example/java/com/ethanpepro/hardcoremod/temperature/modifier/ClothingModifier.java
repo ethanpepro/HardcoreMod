@@ -1,10 +1,9 @@
 package com.ethanpepro.hardcoremod.temperature.modifier;
 
 import com.ethanpepro.hardcoremod.HardcoreModExample;
-import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
-import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
+import com.ethanpepro.hardcoremod.item.ClothingItem;
+import com.ethanpepro.hardcoremod.item.ClothingType;
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,12 +11,9 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -31,30 +27,23 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 	private final Identifier identifier;
 	
 	private float modifier;
-	private boolean shouldRust;
-	private float rustChance;
-	private int rustMaxDamage;
-	private final List<String> rustMaterials;
+	private float nakedModifier;
+	private float armorModifier;
+	private float feetModifier;
 	private final Object2ObjectOpenHashMap<Identifier, List<String>> clothingDataMap;
 	
 	public ClothingModifier() {
 		identifier = new Identifier("hardcoremod-example", "clothing");
 		
-		rustMaterials = Lists.newArrayList();
 		clothingDataMap = new Object2ObjectOpenHashMap<>();
-	}
-	
-	private boolean calculateRustDamageChance(Random random) {
-		return random.nextFloat() < rustChance;
 	}
 	
 	@Override
 	public void clearResources() {
-		modifier = 0;
-		shouldRust = false;
-		rustChance = 0;
-		rustMaxDamage = 0;
-		rustMaterials.clear();
+		modifier = 0.0f;
+		nakedModifier = 0.0f;
+		armorModifier = 0.0f;
+		feetModifier = 0.0f;
 		clothingDataMap.clear();
 	}
 	
@@ -62,15 +51,9 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 	@Override
 	public void processResources(@NotNull JsonObject root) {
 		modifier = root.get("modifier").getAsFloat();
-		shouldRust = root.get("shouldRust").getAsBoolean();
-		rustChance = root.get("rustChance").getAsFloat();
-		rustMaxDamage = root.get("rustMaxDamage").getAsInt();
-		
-		JsonArray rustMaterialsArray = root.get("rustMaterials").getAsJsonArray();
-		
-		for (JsonElement element : rustMaterialsArray) {
-			rustMaterials.add(element.getAsString());
-		}
+		nakedModifier = root.get("nakedModifier").getAsFloat();
+		armorModifier = root.get("armorModifier").getAsFloat();
+		feetModifier = root.get("feetModifier").getAsFloat();
 		
 		Set<Map.Entry<String, JsonElement>> clothingEntries = root.get("clothingDataMap").getAsJsonObject().entrySet();
 		
@@ -94,65 +77,123 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		return identifier;
 	}
 	
-	// TODO: These should technically only be calculating a single number, the temperature modifier. But performance demands we do it here.
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos, float temperature) {
-		// TODO: Get rid of.
+		int coldPoints = 0;
+		int heatPoints = 0;
+		
+		boolean hasCloak = false;
+		boolean hasFootwear = false;
+		boolean isClothingNaked = true;
+		boolean isArmorNaked = true;
+		
 		Optional<TrinketComponent> optional = TrinketsApi.getTrinketComponent(entity);
-		
-		if (optional.isEmpty()) {
-			return temperature;
-		}
-		
-		TrinketComponent component = optional.get();
-		
-		boolean hasRustResist = false;
-		
-		List<Pair<SlotReference, ItemStack>> equippedClothingPairs = component.getAllEquipped();
-		
-		for (Pair<SlotReference, ItemStack> clothingPair : equippedClothingPairs) {
-			ItemStack clothingItemStack = clothingPair.getRight();
-			Item clothingItem = clothingItemStack.getItem();
-			Identifier clothingItemIdentifier = Registry.ITEM.getId(clothingItem);
-			if (clothingDataMap.containsKey(clothingItemIdentifier)) {
-				List<String> values = clothingDataMap.get(clothingItemIdentifier);
+		if (optional.isPresent()) {
+			TrinketComponent component = optional.get();
+			
+			for (Pair<SlotReference, ItemStack> itemStackPair : component.getAllEquipped()) {
+				ItemStack itemStack = itemStackPair.getRight();
 				
-				for (String value : values) {
-					switch (value) {
-						case "resistsCold":
-							break;
-						case "resistsHeat":
-							break;
-						case "preventsRust":
-							hasRustResist = true;
-							break;
-						default:
-							break;
-					}
+				if (itemStack.isEmpty()) {
+					continue;
 				}
-			}
-		}
-		
-		// TODO: Move to PlayerEntityMixin?
-		if (shouldRust && entity.isWet() && !hasRustResist) {
-			for (ItemStack armorItemStack : entity.getArmorItems()) {
-				if (armorItemStack.getItem() instanceof ArmorItem armorItem) {
-					if (rustMaterials.contains(armorItem.getMaterial().getName())) {
-						Random random = world.getRandom();
+				
+				isClothingNaked = false;
+				
+				Item item = itemStack.getItem();
+				
+				if (item instanceof ClothingItem clothingItem) {
+					if (clothingItem.getClothingType().equals(ClothingType.CLOAK)) {
+						hasCloak = true;
+					}
+					
+					if (clothingItem.getClothingType().equals(ClothingType.FEET)) {
+						hasFootwear = true;
+					}
+					
+					Identifier clothingItemIdentifier = Registry.ITEM.getId(clothingItem);
+					
+					if (clothingDataMap.containsKey(clothingItemIdentifier)) {
+						List<String> values = clothingDataMap.get(clothingItemIdentifier);
 						
-						if (calculateRustDamageChance(random)) {
-							armorItemStack.damage(random.nextInt(rustMaxDamage + 1), entity, callback -> callback.sendEquipmentBreakStatus(armorItem.getSlotType()));
-							
-							// TODO: Notify the player their armor is being damaged!
+						for (String value : values) {
+							switch (value) {
+								case "addColdPoint":
+									coldPoints++;
+									break;
+								case "addHeatPoint":
+									heatPoints++;
+									break;
+								case "subtractColdPoint":
+									coldPoints--;
+									break;
+								case "subtractHeatPoint":
+									heatPoints--;
+									break;
+								default:
+									break;
+							}
 						}
 					}
 				}
 			}
 		}
 		
-		// TODO: If temperature > 0, cap temperature out at burning - 1. Then use score.
-		// TODO: If temperature < 0, cap temperature out at freezing + 1. Then use score.
+		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+			if (equipmentSlot.getType() != EquipmentSlot.Type.ARMOR) {
+				continue;
+			}
+			
+			ItemStack itemStack = entity.getEquippedStack(equipmentSlot);
+			
+			if (itemStack.isEmpty()) {
+				continue;
+			}
+			
+			// TODO: Differentiate between clothing naked and armor naked.
+			isArmorNaked = false;
+			
+			if (equipmentSlot.equals(EquipmentSlot.FEET)) {
+				hasFootwear = true;
+			}
+			
+			if (itemStack.getItem() instanceof ArmorItem armorItem) {
+				ArmorMaterial armorMaterial = armorItem.getMaterial();
+				
+				if (armorMaterial.equals(ArmorMaterials.LEATHER)) {
+					if (temperature < 0.0f) {
+						temperature++;
+					}
+					
+					continue;
+				}
+				
+				if (armorMaterial.equals(ArmorMaterials.NETHERITE)) {
+					if (temperature > 0.0f) {
+						temperature--;
+					}
+					
+					continue;
+				}
+				
+				if (!hasCloak) {
+					temperature *= armorModifier;
+				}
+			}
+		}
 		
-		return temperature;
+		temperature = TemperatureHelper.clampAndRound(temperature);
+		
+		if (temperature > 0.0f) {
+			temperature -= heatPoints;
+		} else if (temperature < 0.0f) {
+			temperature += coldPoints;
+		}
+		
+		temperature = TemperatureHelper.clampAndRound(temperature);
+		
+		HardcoreModExample.LOGGER.info("coldPoints={}, heatPoints={}, hasCloak={}, isClothingNaked={}, isArmorNaked={}, wearingBoots={}, temperature={}", coldPoints, heatPoints, hasCloak, isClothingNaked, isArmorNaked, hasFootwear, temperature);
+		
+		return temperature * modifier;
 	}
 }

@@ -6,14 +6,9 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.NotNull;
 
 public class TemperatureDataRegistry {
-	private static boolean finished = false;
-	private static final Object2ObjectOpenHashMap<String, TemperatureData> temperatureData = new Object2ObjectOpenHashMap<>();
+	private static final Object2ObjectOpenHashMap<String, TemperatureData> temperatureData;
 
 	public static void register(@NotNull String name, @NotNull TemperatureData data) {
-		if (finished) {
-			return;
-		}
-
 		// TODO: There is currently no sanity checking on the temperature range bounds.
 		// TODO: Members must be valid.
 		// TODO: min/max must make sense, and must be "balanced" so equilibrium is 0 (absolute min and max must be "equal") when "done" registering.
@@ -30,13 +25,9 @@ public class TemperatureDataRegistry {
 
 	public static void clear() {
 		temperatureData.clear();
-
-		finished = false;
 	}
-
-	public static void finish() {
-		finished = true;
-
-		// TODO: Cache everything.
+	
+	static {
+		temperatureData = new Object2ObjectOpenHashMap<>();
 	}
 }

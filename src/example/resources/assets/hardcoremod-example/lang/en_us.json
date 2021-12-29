@@ -1,4 +1,22 @@
 {
+  "item.hardcoremod-example.face_wrap": "Face Wrap",
+  "item.hardcoremod-example.arming_cap": "Arming Cap",
+
+  "item.hardcoremod-example.tunic": "Tunic",
+  "item.hardcoremod-example.gambeson": "Gambeson",
+
   "item.hardcoremod-example.casual_cloak": "Casual Cloak",
-  "item.hardcoremod-example.formal_cloak": "Formal Cloak"
+  "item.hardcoremod-example.formal_cloak": "Formal Cloak",
+
+  "item.hardcoremod-example.trousers": "Trousers",
+  "item.hardcoremod-example.greaves": "Greaves",
+
+  "item.hardcoremod-example.shoes": "Shoes",
+  "item.hardcoremod-example.boots": "Boots",
+
+  "item.hardcoremod-example.glove": "Glove",
+  "item.hardcoremod-example.bracer": "Bracer",
+
+  "item.hardcoremod-example.offhand_glove": "Offhand Glove",
+  "item.hardcoremod-example.offhand_bracer": "Offhand Bracer"
 }

@@ -1,11 +1,10 @@
 package com.ethanpepro.hardcoremod.temperature;
 
-import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.temperature.data.TemperatureData;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.ethanpepro.hardcoremod.temperature.modifier.BaseTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.DynamicTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.StaticTemperatureModifier;
-import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
@@ -108,5 +107,15 @@ public class TemperatureHelper {
 		float percentage = (2.0f / getAbsoluteTemperatureRange()) * (temperature - getAbsoluteMinimumTemperature()) - 1.0f;
 
 		return MathHelper.clamp(percentage, -1.0f, 1.0f);
+	}
+	
+	public static boolean shouldTemperatureModifierRun(@NotNull World world) {
+		if (!world.getDimension().isNatural()) {
+			return true;
+		}
+		
+		// TODO: Other conditions.
+		
+		return false;
 	}
 }

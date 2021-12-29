@@ -1,7 +1,7 @@
 package com.ethanpepro.hardcoremod.client.item;
 
-import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.client.world.ClientWorld;
@@ -31,6 +31,7 @@ public class ThermometerModelPredicateProvider implements UnclampedModelPredicat
 	}
 	
 	// TODO: Why is this deprecated?
+	@SuppressWarnings("deprecation")
 	@Override
 	public float call(ItemStack itemStack, @Nullable ClientWorld clientWorld, @Nullable LivingEntity livingEntity, int i) {
 		return unclampedCall(itemStack, clientWorld, livingEntity, i);

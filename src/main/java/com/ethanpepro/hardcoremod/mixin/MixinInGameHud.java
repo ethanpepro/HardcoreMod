@@ -1,8 +1,8 @@
 package com.ethanpepro.hardcoremod.mixin;
 
-import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,15 +26,11 @@ import java.util.Random;
 public abstract class MixinInGameHud extends DrawableHelper {
 	private static final Identifier MOD_GUI_ICONS_TEXTURE = new Identifier("hardcoremod", "textures/gui/icons.png");
 
-	private static final int EQUILIBRIUM_COLOR = 0xffffff;
-	private static final int FREEZING_COLOR = 0xa5cdff;
-	private static final int BURNING_COLOR = 0xb62202;
-
 	private static int lerpColors(int a, int b, float percentage){
 		int mask1 = 0x00ff00ff;
 		int mask2 = 0xff00ff00;
 
-		int f2 = (int)(256 * percentage);
+		int f2 = (int)(256.0f * percentage);
 		int f1 = 256 - f2;
 
 		return (a & mask1) * f1 + (b & mask1) * f2 >> 8 & mask1 | ((a & mask2) * f1 + (b & mask2) * f2 >> 8 & mask2);
@@ -70,9 +66,8 @@ public abstract class MixinInGameHud extends DrawableHelper {
 
 		if (playerEntity != null) {
 			int x = scaledWidth / 2 - 8;
-			// TODO: Interferes with text display when switching items.
 			// TODO: Mixin renderHeldItemTooltip.
-			// TODO: Also interferes with ender dragon bar.
+			// TODO: Also interferes with boss health bars.
 			int offset = (playerEntity.experienceLevel > 0) ? 54 : 48;
 			int y = scaledHeight - offset;
 
@@ -88,17 +83,11 @@ public abstract class MixinInGameHud extends DrawableHelper {
 			}
 
 			// TODO: Better color interpolation.
-			int color = EQUILIBRIUM_COLOR;
-
-			if (temperature > TemperatureHelper.getEquilibriumTemperature()) {
-				color = lerpColors(color, BURNING_COLOR, percentage);
-			} else {
-				color = lerpColors(color, FREEZING_COLOR, percentage);
-			}
-
-			float r = ((color & 0xff0000) >> 16) / 255.0f;
-			float g = ((color & 0x00ff00) >> 8) / 255.0f;
-			float b = ((color & 0x0000ff)) / 255.0f;
+			int color = lerpColors(0xffffff, temperature > TemperatureHelper.getEquilibriumTemperature() ? HardcoreModConfig.temperature.burningTemperatureColor : HardcoreModConfig.temperature.freezingTemperatureColor, percentage);
+			
+			float r = (float)(color >> 16 & 0xff) / 255.0f;
+			float g = (float)(color >> 8 & 0xff) / 255.0f;
+			float b = (float)(color & 0xff) / 255.0f;
 
 			RenderSystem.setShaderColor(r, g, b, 1.0f);
 

@@ -1,8 +1,13 @@
 package com.ethanpepro.hardcoremod.item;
 
-// TODO: Move to main?
 public enum ClothingType {
-	CLOAK("cloak", 100);
+	HEAD("head", 125),
+	CHEST("chest", 200),
+	CLOAK("cloak", 75),
+	LEGS("legs", 150),
+	FEET("feet", 100),
+	HAND("hand", 50),
+	OFFHAND("offhand", 50);
 	
 	private final String name;
 	private final int durability;

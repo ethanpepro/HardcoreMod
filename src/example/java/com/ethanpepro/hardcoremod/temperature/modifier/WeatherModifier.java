@@ -1,5 +1,7 @@
 package com.ethanpepro.hardcoremod.temperature.modifier;
 
+import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.util.clothing.ClothingUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -44,13 +46,17 @@ public class WeatherModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (shouldNotRun(world)) {
+		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
 			return 0.0f;
 		}
 
 		float temperature = 0.0f;
 
 		if (world.isRaining() && world.isSkyVisible(pos) && world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, pos).getY() <= pos.getY()) {
+			if (ClothingUtil.entityWearingClothingInClothingDataArray(entity, ClothingUtil.getWeatheringProtectiveClothes())) {
+				return 0.0f;
+			}
+			
 			Biome biome = world.getBiome(pos);
 
 			if (biome.getPrecipitation() == Biome.Precipitation.RAIN) {

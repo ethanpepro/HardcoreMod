@@ -4,6 +4,7 @@ import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.util.message.MessageUtil;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -13,7 +14,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.world.Difficulty;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,10 +42,19 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 	// TODO: Feed the unclamped temperature value into this?
 	private int getTemperatureUpdateThreshold() {
 		int updateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - HardcoreModConfig.temperature.minimumTemperatureThreshold;
-		int temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
 		int currentRange = Math.abs(temperature - temperatureTarget);
 		
-		return Math.max(HardcoreModConfig.temperature.minimumTemperatureThreshold, HardcoreModConfig.temperature.maximumTemperatureThreshold - (currentRange * updateRange) / temperatureRange);
+		int temperatureRange = 0;
+		
+		if (temperatureTarget > 0) {
+			temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature();
+		} else {
+			temperatureRange = TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
+		}
+		
+		int adjustedUpdateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - (HardcoreModConfig.temperature.maximumTemperatureThreshold * Math.abs(temperature / temperatureRange));
+		
+		return Math.max(HardcoreModConfig.temperature.minimumTemperatureThreshold, adjustedUpdateRange - ((currentRange * updateRange) / temperatureRange));
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
@@ -58,7 +67,9 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 		// TODO: A smarter system that compares if the body's current temperature is in a different range than the target temperature.
 		Text message = TemperatureHelper.getFlavorTextForTemperature(player.world, temperatureTarget);
 		
-		HardcoreMod.LOGGER.info("{}", Objects.requireNonNull(message).asString());
+		Objects.requireNonNull(message);
+		
+		MessageUtil.pushMessage(player, message);
 	}
 
 	private void applyStatusEffects() {
@@ -85,6 +96,7 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 		}
 	}
 
+	// TODO: Need to override freezing mechanics.
 	public int getTemperature() {
 		return temperature;
 	}
@@ -117,6 +129,11 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 		}
 
 		if (player.world.getDifficulty() == Difficulty.PEACEFUL) {
+			return;
+		}
+		
+		// TODO: Prevent player from sleeping if too hot or cold?
+		if (player.isSleeping()) {
 			return;
 		}
 

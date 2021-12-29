@@ -1,7 +1,7 @@
 package com.ethanpepro.hardcoremod.temperature;
 
-import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
 import com.ethanpepro.hardcoremod.temperature.modifier.*;
+import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
 
 public class HardcoreModExampleTemperatures {
 	public static void register() {
@@ -11,6 +11,6 @@ public class HardcoreModExampleTemperatures {
 		TemperatureModifierRegistry.register(new TimeModifier());
 		TemperatureModifierRegistry.register(new WeatherModifier());
 		TemperatureModifierRegistry.register(new BlockModifier());
-		TemperatureModifierRegistry.register(new ClothingModifier());
+		//TemperatureModifierRegistry.register(new ClothingModifier());
 	}
 }
