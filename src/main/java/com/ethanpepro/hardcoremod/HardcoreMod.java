@@ -37,7 +37,7 @@ public class HardcoreMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// TODO: Get this code out of ResourceManagerHelper.
-		// TODO: Mods should not be able to modify this. Don't use ResourceManagerHelper.
+		// TODO: Mods should not be able to modify this. Don't use ResourceManagerHelper?
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 			@Override
 			public Identifier getFabricId() {

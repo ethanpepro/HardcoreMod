@@ -17,6 +17,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -85,7 +86,6 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		boolean hasCloak = false;
 		boolean hasFootwear = false;
 		boolean isClothingNaked = true;
-		boolean isArmorNaked = true;
 		
 		Optional<TrinketComponent> optional = TrinketsApi.getTrinketComponent(entity);
 		if (optional.isPresent()) {
@@ -150,9 +150,6 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 				continue;
 			}
 			
-			// TODO: Differentiate between clothing naked and armor naked.
-			isArmorNaked = false;
-			
 			if (equipmentSlot.equals(EquipmentSlot.FEET)) {
 				hasFootwear = true;
 			}
@@ -186,13 +183,19 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		
 		if (temperature > 0.0f) {
 			temperature -= heatPoints;
+			temperature = MathHelper.clamp(temperature, 0.0f, TemperatureHelper.getAbsoluteMaximumTemperature());
 		} else if (temperature < 0.0f) {
 			temperature += coldPoints;
+			temperature = MathHelper.clamp(temperature, TemperatureHelper.getAbsoluteMinimumTemperature(), 0.0f);
 		}
 		
-		temperature = TemperatureHelper.clampAndRound(temperature);
+		if (!hasFootwear) {
+			temperature *= feetModifier;
+		}
 		
-		HardcoreModExample.LOGGER.info("coldPoints={}, heatPoints={}, hasCloak={}, isClothingNaked={}, isArmorNaked={}, wearingBoots={}, temperature={}", coldPoints, heatPoints, hasCloak, isClothingNaked, isArmorNaked, hasFootwear, temperature);
+		if (isClothingNaked) {
+			temperature *= nakedModifier;
+		}
 		
 		return temperature * modifier;
 	}

@@ -80,24 +80,17 @@ public class TemperatureHelper {
 	public static float calculateTemperature(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
 		float temperature = getEquilibriumTemperature();
 		
+		// TODO: Temperature registry takes BaseTemperatureModifier types, but register their derived types in separate registries.
 		for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
-			// Uncomment this to "profile" for bottlenecks and comment out "continue" keyword.
-			// long start = System.nanoTime();
-
 			if (modifier instanceof StaticTemperatureModifier staticModifier) {
 				temperature += staticModifier.getModifier(entity, world, pos);
-				continue;
 			}
-
+		}
+		
+		for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
 			if (modifier instanceof DynamicTemperatureModifier dynamicModifier) {
 				temperature = dynamicModifier.getModifier(entity, world, pos, temperature);
-				continue;
 			}
-
-			// long end = System.nanoTime();
-			// long duration = (long)((end - start) * 0.001);
-
-			// HardcoreMod.LOGGER.info("{} took {} us", modifier.getIdentifier(), duration);
 		}
 
 		return temperature;

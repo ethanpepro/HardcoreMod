@@ -72,6 +72,7 @@ public class MessageHud implements HudRenderCallback {
 			}
 			
 			int width = (client.getWindow().getScaledWidth() / 2) - (client.textRenderer.getWidth(messageString) / 2);
+			// TODO: Maybe move height with decay?
 			int height = 2 + client.textRenderer.fontHeight * i;
 			
 			client.textRenderer.drawWithShadow(matrixStack, messageString, width, height, HardcoreModConfig.accessibility.messageColor + (alpha << 24));

@@ -11,6 +11,6 @@ public class HardcoreModExampleTemperatures {
 		TemperatureModifierRegistry.register(new TimeModifier());
 		TemperatureModifierRegistry.register(new WeatherModifier());
 		TemperatureModifierRegistry.register(new BlockModifier());
-		//TemperatureModifierRegistry.register(new ClothingModifier());
+		TemperatureModifierRegistry.register(new ClothingModifier());
 	}
 }
