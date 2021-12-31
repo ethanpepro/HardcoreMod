@@ -6,7 +6,7 @@ import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModif
 public class HardcoreModExampleTemperatures {
 	// TODO: Total, these take about < 100 us every 3 seconds. Acceptable for the sum of players and thermometers?
 	public static void register() {
-		// TODO: Complex web of overrides? Like clothing can override biome, altitude, weather, but not block or an underwater overide?
+		// TODO: Complex web of overrides? Like clothing can override biome, altitude, weather, but not block or an underwater override?
 		// TODO: Non-performance-crippling way of doing this?
 		TemperatureModifierRegistry.register(new DimensionModifier());
 		TemperatureModifierRegistry.register(new BiomeModifier());
