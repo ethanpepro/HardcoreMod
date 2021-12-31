@@ -27,13 +27,13 @@
 
   "hardcoremod.temperature.freezing": "Freezing",
   "hardcoremod.temperature.freezing.flavor.1": "Your fingers ache and numb with the cold.",
-  "hardcoremod.temperature.freezing.flavor.2": "Your skin begins to freeze.",
+  "hardcoremod.temperature.freezing.flavor.2": "Your skin begins to freeze solid.",
   "hardcoremod.temperature.freezing.flavor.3": "Your muscles stiffen completely.",
 
   "hardcoremod.temperature.cold": "Cold",
   "hardcoremod.temperature.cold.flavor.1": "You worry about developing hypothermia.",
-  "hardcoremod.temperature.cold.flavor.2": "There is a slight nip in the air.",
-  "hardcoremod.temperature.cold.flavor.3": "Your fingers tingle with the cold temperature.",
+  "hardcoremod.temperature.cold.flavor.2": "You feel a slight chilling nip on your face.",
+  "hardcoremod.temperature.cold.flavor.3": "Your fingers tingle with the cold.",
 
   "hardcoremod.temperature.temperate": "Temperate",
   "hardcoremod.temperature.temperate.flavor.1": "Your body feels fine.",
@@ -48,9 +48,9 @@
   "hardcoremod.temperature.burning": "Burning",
   "hardcoremod.temperature.burning.flavor.1": "You can feel your blood boil.",
   "hardcoremod.temperature.burning.flavor.2": "Your skin boils in the intense heat.",
-  "hardcoremod.temperature.burning.flavor.3": "Your body feels scorching hot.",
+  "hardcoremod.temperature.burning.flavor.3": "Your body is scorching hot.",
 
-  "hardcoremod.temperature.rust": "Your armor begins to slowly rust.",
+  "hardcoremod.temperature.rust": "Your %s begin to slowly rust.",
 
   "hardcoremod.temperature.too_extreme": "The temperature is too extreme to sleep now.",
 

@@ -18,6 +18,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -64,8 +65,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			}
 			
 			if (this.isWet()) {
-				boolean hasArmorBeenDamagedThisInterval = false;
-				
 				for (ItemStack armorItemStack : this.getArmorItems()) {
 					if (armorItemStack.getItem() instanceof ArmorItem armorItem) {
 						if (HardcoreModConfig.rust.materialsThatRust.contains(armorItem.getMaterial().getName())) {
@@ -74,11 +73,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 							if (random.nextFloat() < HardcoreModConfig.rust.rustChance) {
 								armorItemStack.damage(random.nextInt(HardcoreModConfig.rust.rustMaxDamage + 1), this, callback -> callback.sendEquipmentBreakStatus(armorItem.getSlotType()));
 								
-								if (!hasArmorBeenDamagedThisInterval) {
-									MessageUtil.pushMessage(this, new TranslatableText("hardcoremod.temperature.rust"));
-								}
+								MessageUtil.pushMessage(this, new TranslatableText("hardcoremod.temperature.rust", armorItemStack.getName()));
 								
-								hasArmorBeenDamagedThisInterval = true;
+								break;
 							}
 						}
 					}
