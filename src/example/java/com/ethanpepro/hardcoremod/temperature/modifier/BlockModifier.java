@@ -107,6 +107,7 @@ public class BlockModifier implements StaticTemperatureModifier {
 				
 				cache.put(blockIdentifier, value);
 				sum += litValue * (1.0f / value);
+				// TODO: Keep because we might add more types.
 				continue;
 			}
 		}

@@ -10,6 +10,8 @@ import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 
 public class BiomeModifier implements StaticTemperatureModifier {
+	private static final float TWO_THIRDS = 2.0f / 3.0f;
+	
 	private final Identifier identifier;
 
 	private float modifier;
@@ -47,8 +49,6 @@ public class BiomeModifier implements StaticTemperatureModifier {
 		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
 			return 0.0f;
 		}
-
-		float temperature = 0.0f;
 		
 		Biome biome = world.getBiome(pos);
 		
@@ -60,7 +60,7 @@ public class BiomeModifier implements StaticTemperatureModifier {
 		
 		float average = (center + north + south + east + west) / 5.0f;
 		
-		temperature += Math.round((2.0f / 3.0f) * (average + 1.0f) - 1.0f);
+		float temperature = Math.round(TWO_THIRDS * (average + 1.0f) - 1.0f);
 		
 		if (biome.isHot(pos)) {
 			temperature += hotModifier;

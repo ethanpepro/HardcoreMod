@@ -82,7 +82,7 @@ public class HardcoreMod implements ModInitializer {
 
 			@Override
 			public void reload(ResourceManager manager) {
-				for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
+				for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getTemperatureModifiers().values()) {
 					modifier.clearResources();
 					
 					String name = modifier.getIdentifier().getPath() + ".json";

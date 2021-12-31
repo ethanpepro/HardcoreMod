@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 public class HardcoreModExample implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("hardcoremod-example");
 	
-	// TODO: Make leather scraps and wool scraps.
 	@Override
 	public void onInitialize() {
 		HardcoreModExampleItems.register();

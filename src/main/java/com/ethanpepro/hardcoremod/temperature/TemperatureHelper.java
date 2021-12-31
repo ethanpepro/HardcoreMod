@@ -2,7 +2,6 @@ package com.ethanpepro.hardcoremod.temperature;
 
 import com.ethanpepro.hardcoremod.temperature.data.TemperatureData;
 import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
-import com.ethanpepro.hardcoremod.temperature.modifier.BaseTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.DynamicTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.StaticTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
@@ -80,17 +79,12 @@ public class TemperatureHelper {
 	public static float calculateTemperature(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
 		float temperature = getEquilibriumTemperature();
 		
-		// TODO: Temperature registry takes BaseTemperatureModifier types, but register their derived types in separate registries.
-		for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
-			if (modifier instanceof StaticTemperatureModifier staticModifier) {
-				temperature += staticModifier.getModifier(entity, world, pos);
-			}
+		for (StaticTemperatureModifier modifier : TemperatureModifierRegistry.getStaticTemperatureModifiers().values()) {
+			temperature += modifier.getModifier(entity, world, pos);
 		}
 		
-		for (BaseTemperatureModifier modifier : TemperatureModifierRegistry.getModifiers().values()) {
-			if (modifier instanceof DynamicTemperatureModifier dynamicModifier) {
-				temperature = dynamicModifier.getModifier(entity, world, pos, temperature);
-			}
+		for (DynamicTemperatureModifier modifier : TemperatureModifierRegistry.getDynamicTemperatureModifiers().values()) {
+			temperature = modifier.getModifier(entity, world, pos, temperature);
 		}
 
 		return temperature;
@@ -102,6 +96,7 @@ public class TemperatureHelper {
 		return MathHelper.clamp(percentage, -1.0f, 1.0f);
 	}
 	
+	// TODO: Expand.
 	public static boolean shouldTemperatureModifierRun(@NotNull World world) {
 		if (!world.getDimension().isNatural()) {
 			return true;

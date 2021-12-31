@@ -27,8 +27,8 @@ public abstract class MixinInGameHud extends DrawableHelper {
 	private static final Identifier MOD_GUI_ICONS_TEXTURE = new Identifier("hardcoremod", "textures/gui/icons.png");
 
 	private static int lerpColors(int a, int b, float percentage){
-		int mask1 = 0x00ff00ff;
-		int mask2 = 0xff00ff00;
+		int mask1 = 0x00FF00FF;
+		int mask2 = 0xFF00FF00;
 
 		int f2 = (int)(256.0f * percentage);
 		int f1 = 256 - f2;
@@ -85,9 +85,9 @@ public abstract class MixinInGameHud extends DrawableHelper {
 			// TODO: Better color interpolation.
 			int color = lerpColors(0xffffff, temperature > TemperatureHelper.getEquilibriumTemperature() ? HardcoreModConfig.temperature.burningTemperatureColor : HardcoreModConfig.temperature.freezingTemperatureColor, percentage);
 			
-			float r = (float)(color >> 16 & 0xff) / 255.0f;
-			float g = (float)(color >> 8 & 0xff) / 255.0f;
-			float b = (float)(color & 0xff) / 255.0f;
+			float r = (float)(color >> 16 & 0xFF) / 255.0f;
+			float g = (float)(color >> 8 & 0xFF) / 255.0f;
+			float b = (float)(color & 0xFF) / 255.0f;
 
 			RenderSystem.setShaderColor(r, g, b, 1.0f);
 

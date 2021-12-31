@@ -27,10 +27,10 @@ public class HardcoreModConfig {
 		public int maximumTemperatureThreshold = 1200;
 		
 		@AConfigEntry(environment = ConfigEnvironment.CLIENT)
-		public int freezingTemperatureColor = 0xa5cdff;
+		public int freezingTemperatureColor = 0xA5CDFF;
 		
 		@AConfigEntry(environment = ConfigEnvironment.CLIENT)
-		public int burningTemperatureColor = 0xb62202;
+		public int burningTemperatureColor = 0xB62202;
 	}
 	
 	public static Temperature temperature;
@@ -63,7 +63,7 @@ public class HardcoreModConfig {
 		
 		public int messageLifetime = 200;
 		
-		public int messageColor = 0xffe662;
+		public int messageColor = 0xFFE662;
 	}
 
 	@AConfigEntry(environment = ConfigEnvironment.CLIENT)

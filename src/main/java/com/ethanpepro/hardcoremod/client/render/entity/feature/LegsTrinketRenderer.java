@@ -18,10 +18,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class GreavesTrinketRenderer implements TrinketRenderer {
+public class LegsTrinketRenderer implements TrinketRenderer {
 	private final Identifier texture;
 	
-	public GreavesTrinketRenderer(Identifier texture) {
+	public LegsTrinketRenderer(Identifier texture) {
 		this.texture = texture;
 	}
 	

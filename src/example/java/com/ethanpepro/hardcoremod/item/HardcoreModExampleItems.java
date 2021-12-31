@@ -7,13 +7,14 @@ import net.minecraft.util.registry.Registry;
 
 public class HardcoreModExampleItems {
 	// TODO: Use armor protection "types" like ARMOR and CLOTHING.
+	// TODO: Rename?
 	public static final Item FACE_WRAP = new ClothingItem(ClothingType.HEAD, 0, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	public static final Item ARMING_CAP = new ClothingItem(ClothingType.HEAD, 1, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	
 	public static final Item TUNIC = new ClothingItem(ClothingType.CHEST, 0, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	public static final Item GAMBESON = new ClothingItem(ClothingType.CHEST, 1, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	
-	public static final Item CASUAL_CLOAK = new ClothingItem(ClothingType.CLOAK, 0, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
+	public static final Item CASUAL_CLOAK = new ClothingItem(ClothingType.CLOAK, 1, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	public static final Item FORMAL_CLOAK = new ClothingItem(ClothingType.CLOAK, 1, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));
 	
 	public static final Item TROUSERS = new ClothingItem(ClothingType.LEGS, 0, new FabricItemSettings().group(HardcoreModItemGroup.CLOTHING));

@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 
 @Environment(EnvType.CLIENT)
 public class HardcoreModTrinketModels {
+	// TODO: Z-fighting with clothing and armor.
 	private static final Dilation CLOTHING_DILATION = new Dilation(0.8f);
 	private static final Dilation BRACER_DILATION = new Dilation(0.2f);
 	private static final Dilation GREAVES_DILATION = new Dilation(0.3f);

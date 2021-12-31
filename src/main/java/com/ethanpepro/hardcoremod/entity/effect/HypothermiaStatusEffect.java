@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class HypothermiaStatusEffect extends StatusEffect {
 	public HypothermiaStatusEffect() {
-		super(StatusEffectCategory.HARMFUL, 0xa5cdff);
+		super(StatusEffectCategory.HARMFUL, 0xA5CDFF);
 	}
 
 	@Override

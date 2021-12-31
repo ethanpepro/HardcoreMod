@@ -19,11 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class BracerTrinketRenderer implements TrinketRenderer {
+public class HandTrinketRenderer implements TrinketRenderer {
 	private final Identifier texture;
 	private final boolean offhand;
 	
-	public BracerTrinketRenderer(Identifier texture, boolean offhand) {
+	public HandTrinketRenderer(Identifier texture, boolean offhand) {
 		this.texture = texture;
 		this.offhand = offhand;
 	}

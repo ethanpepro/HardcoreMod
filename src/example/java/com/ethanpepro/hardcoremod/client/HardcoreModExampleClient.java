@@ -1,9 +1,9 @@
 package com.ethanpepro.hardcoremod.client;
 
-import com.ethanpepro.hardcoremod.client.render.entity.feature.BracerTrinketRenderer;
+import com.ethanpepro.hardcoremod.client.render.entity.feature.HandTrinketRenderer;
 import com.ethanpepro.hardcoremod.client.render.entity.feature.CloakTrinketRenderer;
 import com.ethanpepro.hardcoremod.client.render.entity.feature.ClothingTrinketRenderer;
-import com.ethanpepro.hardcoremod.client.render.entity.feature.GreavesTrinketRenderer;
+import com.ethanpepro.hardcoremod.client.render.entity.feature.LegsTrinketRenderer;
 import com.ethanpepro.hardcoremod.item.ClothingItem;
 import com.ethanpepro.hardcoremod.item.HardcoreModExampleItems;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
@@ -42,16 +42,16 @@ public class HardcoreModExampleClient implements ClientModInitializer {
 		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.CASUAL_CLOAK, new CloakTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/casual_cloak.png")));
 		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.FORMAL_CLOAK, new CloakTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/formal_cloak.png")));
 		
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.TROUSERS, new GreavesTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/trousers.png")));
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.GREAVES, new GreavesTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/greaves.png")));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.TROUSERS, new LegsTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/trousers.png")));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.GREAVES, new LegsTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/greaves.png")));
 		
 		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.SHOES, new ClothingTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/shoes.png")));
 		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.BOOTS, new ClothingTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/boots.png")));
 		
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.GLOVE, new BracerTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/glove.png"), false));
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.BRACER, new BracerTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/bracer.png"), false));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.GLOVE, new HandTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/glove.png"), false));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.BRACER, new HandTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/bracer.png"), false));
 		
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.OFFHAND_BRACER, new BracerTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/bracer.png"), true));
-		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.OFFHAND_GLOVE, new BracerTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/glove.png"), true));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.OFFHAND_BRACER, new HandTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/bracer.png"), true));
+		TrinketRendererRegistry.registerRenderer(HardcoreModExampleItems.OFFHAND_GLOVE, new HandTrinketRenderer(new Identifier("hardcoremod-example", "textures/models/glove.png"), true));
 	}
 }
