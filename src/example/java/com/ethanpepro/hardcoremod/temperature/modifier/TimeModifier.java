@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,11 +38,11 @@ public class TimeModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
+		if (!TemperatureHelper.shouldTemperatureModifierRun(modifier, world)) {
 			return 0.0f;
 		}
 
-		float time = (float)Math.sin(world.getTimeOfDay() * ((2.0f * Math.PI) / 24000.0f));
+		float time = (float)Math.sin(world.getTimeOfDay() * (MathHelper.TAU / 24000.0f));
 
 		return Math.round(time * timeIterations) * modifier;
 	}

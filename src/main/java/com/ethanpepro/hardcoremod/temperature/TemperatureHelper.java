@@ -6,10 +6,12 @@ import com.ethanpepro.hardcoremod.temperature.modifier.DynamicTemperatureModifie
 import com.ethanpepro.hardcoremod.temperature.modifier.StaticTemperatureModifier;
 import com.ethanpepro.hardcoremod.temperature.modifier.registry.TemperatureModifierRegistry;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -90,6 +92,7 @@ public class TemperatureHelper {
 		return temperature;
 	}
 
+	// TODO: Could always remap [-1, 1] to [0, 1] and use that to avoid deprecation?
 	public static float convertTemperatureToAbsoluteRangeRatio(float temperature) {
 		float percentage = (2.0f / getAbsoluteTemperatureRange()) * (temperature - getAbsoluteMinimumTemperature()) - 1.0f;
 
@@ -97,13 +100,31 @@ public class TemperatureHelper {
 	}
 	
 	// TODO: Expand.
-	public static boolean shouldTemperatureModifierRun(@NotNull World world) {
-		if (!world.getDimension().isNatural()) {
+	public static boolean shouldTemperatureModifierRun(float modifier, @NotNull World world) {
+		if (modifier > 0.0f) {
+			return true;
+		}
+		
+		if (world.getDimension().isNatural()) {
 			return true;
 		}
 		
 		// TODO: Other conditions.
 		
 		return false;
+	}
+	
+	public static boolean shouldRun(PlayerEntity player) {
+		if (player.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) {
+			return false;
+		}
+		
+		if (player.isSpectator() || player.isCreative()) {
+			return false;
+		}
+		
+		// TODO: Other conditions.
+		
+		return true;
 	}
 }

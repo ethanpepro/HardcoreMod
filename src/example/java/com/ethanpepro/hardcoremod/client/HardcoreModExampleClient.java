@@ -17,6 +17,7 @@ import net.minecraft.util.Identifier;
 public class HardcoreModExampleClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		// TODO: Automate?
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ((ClothingItem)stack.getItem()).getColor(stack),
 				HardcoreModExampleItems.FACE_WRAP,
 				HardcoreModExampleItems.ARMING_CAP,

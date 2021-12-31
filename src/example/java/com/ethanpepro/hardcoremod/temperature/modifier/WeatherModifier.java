@@ -46,7 +46,7 @@ public class WeatherModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
+		if (!TemperatureHelper.shouldTemperatureModifierRun(modifier, world)) {
 			return 0.0f;
 		}
 

@@ -87,6 +87,7 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		boolean hasFootwear = false;
 		boolean isClothingNaked = true;
 		
+		// TODO: Optimize.
 		Optional<TrinketComponent> optional = TrinketsApi.getTrinketComponent(entity);
 		if (optional.isPresent()) {
 			TrinketComponent component = optional.get();
@@ -139,6 +140,7 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 			}
 		}
 		
+		// TODO: Optimize.
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			if (equipmentSlot.getType() != EquipmentSlot.Type.ARMOR) {
 				continue;
@@ -181,6 +183,7 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		
 		temperature = TemperatureHelper.clampAndRound(temperature);
 		
+		// TODO: Tweak. Should not be like this.
 		if (temperature > 0.0f) {
 			temperature -= heatPoints;
 			temperature = MathHelper.clamp(temperature, 0.0f, TemperatureHelper.getAbsoluteMaximumTemperature());

@@ -40,18 +40,18 @@ public class DimensionModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
+		if (!TemperatureHelper.shouldTemperatureModifierRun(modifier, world)) {
 			return 0.0f;
 		}
 
 		float temperature = 0.0f;
 
 		if (endModifier && world.getRegistryKey().equals(World.END)) {
-			temperature += TemperatureHelper.getAbsoluteMinimumTemperature();
+			temperature = TemperatureHelper.getAbsoluteMinimumTemperature();
 		}
 
 		if (netherModifier && world.getRegistryKey().equals(World.NETHER)) {
-			temperature += TemperatureHelper.getAbsoluteMaximumTemperature();
+			temperature = TemperatureHelper.getAbsoluteMaximumTemperature();
 		}
 
 		return temperature * modifier;

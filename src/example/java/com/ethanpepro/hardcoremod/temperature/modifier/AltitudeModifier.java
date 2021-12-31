@@ -61,18 +61,17 @@ public class AltitudeModifier implements StaticTemperatureModifier {
 
 	@Override
 	public float getModifier(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		if (TemperatureHelper.shouldTemperatureModifierRun(world)) {
+		if (!TemperatureHelper.shouldTemperatureModifierRun(modifier, world)) {
 			return 0.0f;
 		}
 
 		float amount = 0.0f;
-
 		int y = pos.getY();
 
 		if (isUnderground(world, pos)) {
-			amount += Math.sqrt(world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, pos).getY() - y) * undergroundModifier;
+			amount = (float)Math.sqrt(world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, pos).getY() - y) * undergroundModifier;
 		} else if (y > world.getSeaLevel() + 1) {
-			amount += altitudeConstant * Math.pow(altitudeBase, world.getTopY() - y);
+			amount = altitudeConstant * (float)Math.pow(altitudeBase, world.getTopY() - y);
 		}
 
 		return Math.round(amount) * modifier;

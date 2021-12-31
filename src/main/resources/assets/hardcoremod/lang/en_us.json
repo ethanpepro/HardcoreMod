@@ -52,6 +52,8 @@
 
   "hardcoremod.temperature.rust": "Your armor begins to slowly rust.",
 
+  "hardcoremod.temperature.too_extreme": "The temperature is too extreme to sleep now.",
+
   "effect.hardcoremod.hypothermia": "Hypothermia",
   "effect.hardcoremod.hyperthermia": "Hyperthermia",
 

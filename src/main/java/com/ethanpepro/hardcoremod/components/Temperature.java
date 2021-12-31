@@ -1,6 +1,5 @@
 package com.ethanpepro.hardcoremod.components;
 
-import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
@@ -59,7 +58,7 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
 		float target = TemperatureHelper.calculateTemperature(player, player.getEntityWorld(), player.getBlockPos());
-
+		
 		return TemperatureHelper.clampAndRound(target);
 	}
 
@@ -127,17 +126,12 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 		if (!HardcoreModConfig.temperature.enabled) {
 			return;
 		}
-
-		if (player.world.getDifficulty() == Difficulty.PEACEFUL) {
+		
+		if (!TemperatureHelper.shouldRun(player)) {
 			return;
 		}
 		
-		// TODO: Prevent player from sleeping if too hot or cold?
 		if (player.isSleeping()) {
-			return;
-		}
-
-		if (player.isSpectator() || player.isCreative()) {
 			return;
 		}
 
@@ -148,8 +142,6 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 			temperatureTargetTimer = 0;
 
 			temperatureTarget = calculateTargetTemperatureForPlayer(player);
-			
-			HardcoreMod.LOGGER.info("{} -> {} ({}/{} ticks)", temperature, temperatureTarget, temperatureTimer, getTemperatureUpdateThreshold());
 		}
 
 		if (temperatureTimer >= getTemperatureUpdateThreshold()) {

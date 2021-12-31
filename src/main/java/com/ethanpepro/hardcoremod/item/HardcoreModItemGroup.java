@@ -6,6 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 public class HardcoreModItemGroup {
-	public static final ItemGroup TOOLS = FabricItemGroupBuilder.create(new Identifier("hardcoremod", "tools")).icon(() -> new ItemStack(HardcoreModItems.THERMOMETER)).build();
+	// TODO: Edit icon after the fact?
 	public static final ItemGroup CLOTHING = FabricItemGroupBuilder.create(new Identifier("hardcoremod", "clothing")).icon(() -> new ItemStack(HardcoreModItems.YARN)).build();
 }
