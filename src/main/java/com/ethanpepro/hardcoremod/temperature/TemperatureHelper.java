@@ -17,35 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TemperatureHelper {
-	// TODO: The performance cost might not be terrible on these functions, but find a way to cache these once all TemperatureData members are registered.
-	public static int getAbsoluteMinimumTemperature() {
-		int minimum = 0;
-
-		for (TemperatureData data : TemperatureDataRegistry.getTemperatureData().values()) {
-			minimum = Math.min(minimum, data.getMin());
-		}
-
-		return minimum;
-	}
-
-	public static int getAbsoluteMaximumTemperature() {
-		int maximum = 0;
-
-		for (TemperatureData data : TemperatureDataRegistry.getTemperatureData().values()) {
-			maximum = Math.max(maximum, data.getMax());
-		}
-
-		return maximum;
-	}
-
-	public static int getEquilibriumTemperature() {
-		return (getAbsoluteMaximumTemperature() + getAbsoluteMinimumTemperature()) / 2;
-	}
-
-	public static int getAbsoluteTemperatureRange() {
-		return getAbsoluteMaximumTemperature() - getAbsoluteMinimumTemperature();
-	}
-
 	public static boolean isTemperatureInRange(int temperature, int min, int max) {
 		return (temperature >= min && temperature <= max);
 	}
@@ -75,11 +46,11 @@ public class TemperatureHelper {
 	}
 
 	public static int clampAndRound(float temperature) {
-		return Math.round(MathHelper.clamp(temperature, getAbsoluteMinimumTemperature(), getAbsoluteMaximumTemperature()));
+		return Math.round(MathHelper.clamp(temperature, TemperatureDataRegistry.getAbsoluteMinimumTemperature(), TemperatureDataRegistry.getAbsoluteMaximumTemperature()));
 	}
 
 	public static float calculateTemperature(@NotNull LivingEntity entity, @NotNull World world, @NotNull BlockPos pos) {
-		float temperature = getEquilibriumTemperature();
+		float temperature = TemperatureDataRegistry.getEquilibriumTemperature();
 		
 		for (StaticTemperatureModifier modifier : TemperatureModifierRegistry.getStaticTemperatureModifiers().values()) {
 			temperature += modifier.getModifier(entity, world, pos);
@@ -94,7 +65,7 @@ public class TemperatureHelper {
 
 	// TODO: Could always remap [-1, 1] to [0, 1] and use that to avoid deprecation?
 	public static float convertTemperatureToAbsoluteRangeRatio(float temperature) {
-		float percentage = (2.0f / getAbsoluteTemperatureRange()) * (temperature - getAbsoluteMinimumTemperature()) - 1.0f;
+		float percentage = (2.0f / TemperatureDataRegistry.getAbsoluteTemperatureRange()) * (temperature - TemperatureDataRegistry.getAbsoluteMinimumTemperature()) - 1.0f;
 
 		return MathHelper.clamp(percentage, -1.0f, 1.0f);
 	}

@@ -1,5 +1,6 @@
 package com.ethanpepro.hardcoremod.mixin;
 
+import com.ethanpepro.hardcoremod.HardcoreMod;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.components.Temperature;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
@@ -61,7 +62,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			counter = 0;
 			
 			if (ClothingUtil.entityWearingClothingInClothingDataArray(this, ClothingUtil.getWeatheringProtectiveClothes())) {
-				return;
+				if (!this.isTouchingWater()) {
+					return;
+				}
 			}
 			
 			if (this.isWet()) {

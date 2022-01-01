@@ -1,6 +1,7 @@
 package com.ethanpepro.hardcoremod.temperature.modifier;
 
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -47,11 +48,11 @@ public class DimensionModifier implements StaticTemperatureModifier {
 		float temperature = 0.0f;
 
 		if (endModifier && world.getRegistryKey().equals(World.END)) {
-			temperature = TemperatureHelper.getAbsoluteMinimumTemperature();
+			temperature = TemperatureDataRegistry.getAbsoluteMinimumTemperature();
 		}
 
 		if (netherModifier && world.getRegistryKey().equals(World.NETHER)) {
-			temperature = TemperatureHelper.getAbsoluteMaximumTemperature();
+			temperature = TemperatureDataRegistry.getAbsoluteMaximumTemperature();
 		}
 
 		return temperature * modifier;

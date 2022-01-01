@@ -3,6 +3,7 @@ package com.ethanpepro.hardcoremod.components;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.ethanpepro.hardcoremod.entity.effect.HardcoreModStatusEffects;
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.ethanpepro.hardcoremod.util.message.MessageUtil;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -46,9 +47,9 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 		int temperatureRange = 0;
 		
 		if (temperatureTarget > 0) {
-			temperatureRange = TemperatureHelper.getAbsoluteMaximumTemperature() - TemperatureHelper.getEquilibriumTemperature();
+			temperatureRange = TemperatureDataRegistry.getAbsoluteMaximumTemperature() - TemperatureDataRegistry.getEquilibriumTemperature();
 		} else {
-			temperatureRange = TemperatureHelper.getEquilibriumTemperature() - TemperatureHelper.getAbsoluteMinimumTemperature();
+			temperatureRange = TemperatureDataRegistry.getEquilibriumTemperature() - TemperatureDataRegistry.getAbsoluteMinimumTemperature();
 		}
 		
 		int adjustedUpdateRange = HardcoreModConfig.temperature.maximumTemperatureThreshold - (HardcoreModConfig.temperature.maximumTemperatureThreshold * Math.abs(temperature / temperatureRange));
@@ -57,9 +58,7 @@ public class Temperature implements ComponentV3, AutoSyncedComponent, ServerTick
 	}
 
 	private int calculateTargetTemperatureForPlayer(@NotNull PlayerEntity player) {
-		float target = TemperatureHelper.calculateTemperature(player, player.getEntityWorld(), player.getBlockPos());
-		
-		return TemperatureHelper.clampAndRound(target);
+		return TemperatureHelper.clampAndRound(TemperatureHelper.calculateTemperature(player, player.getEntityWorld(), player.getBlockPos()));
 	}
 
 	private void onUpdateTemperature() {

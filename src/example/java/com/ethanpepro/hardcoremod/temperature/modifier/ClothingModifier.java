@@ -4,6 +4,7 @@ import com.ethanpepro.hardcoremod.HardcoreModExample;
 import com.ethanpepro.hardcoremod.item.ClothingItem;
 import com.ethanpepro.hardcoremod.item.ClothingType;
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -186,10 +187,10 @@ public class ClothingModifier implements DynamicTemperatureModifier {
 		// TODO: Tweak. Should not be like this.
 		if (temperature > 0.0f) {
 			temperature -= heatPoints;
-			temperature = MathHelper.clamp(temperature, 0.0f, TemperatureHelper.getAbsoluteMaximumTemperature());
+			temperature = MathHelper.clamp(temperature, 0.0f, TemperatureDataRegistry.getAbsoluteMaximumTemperature());
 		} else if (temperature < 0.0f) {
 			temperature += coldPoints;
-			temperature = MathHelper.clamp(temperature, TemperatureHelper.getAbsoluteMinimumTemperature(), 0.0f);
+			temperature = MathHelper.clamp(temperature, TemperatureDataRegistry.getAbsoluteMinimumTemperature(), 0.0f);
 		}
 		
 		if (!hasFootwear) {

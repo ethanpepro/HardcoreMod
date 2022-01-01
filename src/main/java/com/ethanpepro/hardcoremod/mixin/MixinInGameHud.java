@@ -3,6 +3,7 @@ package com.ethanpepro.hardcoremod.mixin;
 import com.ethanpepro.hardcoremod.components.HardcoreModComponents;
 import com.ethanpepro.hardcoremod.config.HardcoreModConfig;
 import com.ethanpepro.hardcoremod.temperature.TemperatureHelper;
+import com.ethanpepro.hardcoremod.temperature.data.registry.TemperatureDataRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -83,7 +84,7 @@ public abstract class MixinInGameHud extends DrawableHelper {
 			}
 
 			// TODO: Better color interpolation.
-			int color = lerpColors(0xffffff, temperature > TemperatureHelper.getEquilibriumTemperature() ? HardcoreModConfig.temperature.burningTemperatureColor : HardcoreModConfig.temperature.freezingTemperatureColor, percentage);
+			int color = lerpColors(0xffffff, temperature > TemperatureDataRegistry.getEquilibriumTemperature() ? HardcoreModConfig.temperature.burningTemperatureColor : HardcoreModConfig.temperature.freezingTemperatureColor, percentage);
 			
 			float r = (float)(color >> 16 & 0xFF) / 255.0f;
 			float g = (float)(color >> 8 & 0xFF) / 255.0f;

@@ -39,15 +39,11 @@ public class ThermometerModelPredicateProvider implements UnclampedModelPredicat
 	
 	@Override
 	public float unclampedCall(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) {
-		// TODO: This disables item frames.
+		// TODO: This disables item frames, fix.
 		if (entity == null) {
 			return 0.0f;
 		}
 		
-		return cache.computeIfAbsent(entity.getUuid(), value -> {
-			float temperature = TemperatureHelper.calculateTemperature(entity, entity.getEntityWorld(), entity.getBlockPos());
-			
-			return TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(temperature);
-		});
+		return cache.computeIfAbsent(entity.getUuid(), value -> TemperatureHelper.convertTemperatureToAbsoluteRangeRatio(TemperatureHelper.clampAndRound(TemperatureHelper.calculateTemperature(entity, entity.getEntityWorld(), entity.getBlockPos()))));
 	}
 }

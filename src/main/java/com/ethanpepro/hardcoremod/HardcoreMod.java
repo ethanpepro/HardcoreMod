@@ -63,10 +63,19 @@ public class HardcoreMod implements ModInitializer {
 						Gson gson = new Gson();
 						JsonObject value = member.getValue().getAsJsonObject();
 
-						TemperatureData data = gson.fromJson(value, TemperatureData.class);
-
-						TemperatureDataRegistry.register(key, data);
+						try {
+							TemperatureData data = gson.fromJson(value, TemperatureData.class);
+							TemperatureDataRegistry.register(key, data);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				try {
+					TemperatureDataRegistry.validate();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
